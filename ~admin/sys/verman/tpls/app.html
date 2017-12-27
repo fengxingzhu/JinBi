@@ -1,0 +1,67 @@
+<script type="text/javascript">
+$(function(){
+	$('#Verman-grid').flexigrid({
+		title:'<span class="mx-sysmenu"></span>',
+		height:'auto',
+		showToggleBtn:false,
+		resizable:false,
+		buttons : [
+			{
+				name:'新增站点',
+				bclass:'mx-add',
+				onpress:function(){
+					var url = "sys/verman/?add.html";
+					tabtreecontent(url);
+					$.mx.setparam('url',url);
+				}
+			}
+		]
+	});
+});
+//删除站点
+function delsites(tag)
+{
+	dialog({
+		title:'提示',
+		content:'确定删除这些吗?,确定后删除将不能恢复!',
+		resizable:false,
+		bgiframe:false,
+		buttons:{
+			'是': function(){
+				var me = this;
+				$.post('sys/verman/do/?Data-delsite.html',{tag:tag},function(text){
+					Tip({title:'站点删除提示:',content:'站点删除成功!'});
+					tabtreecontent('sys/verman/?app.html');
+					$(me).dialog('destroy');
+				});
+			},
+			'否': function() {
+				$(this).dialog('destroy');
+			}
+		}
+	});
+}
+</script>
+<%import class="Data" method="getglist"%>
+<table id="Verman-grid">
+  <thead>
+	<tr>
+		<th width="300">站点名称</th>
+		<th width="100">站点标记</th>
+		<th width="100">超管账号</th>
+		<th width="200">站点描述</th>
+		<th width="60">操作</th>
+	</tr>
+</thead>
+   <tbody>
+		<%loop from="data" item="list"%>
+		<tr>
+			<td><%$list.webname%></td>
+			<td><%$list.tag%></td>
+			<td><%$list.username%></td>
+			<td><%$list.summary%></td>
+			<td><a href="javascript:delsites('<%$list.tag%>');">删除</a></td>
+		</tr>
+		<%/loop%>
+</tbody>
+</table>

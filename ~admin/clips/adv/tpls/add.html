@@ -1,0 +1,55 @@
+<div class="ui-state-default left-tree-top" style="margin-right:0;">
+	<span><span class="mx-sysmenu-tree"></span> > 新增广告位</span>
+</div>
+<div class="mx-toolbar">
+	<a class="button" brurl="clips/adv/?app.html" href="javascript:;">返回<span class="mx-sysmenu-tree"></span></a>
+</div>
+<div class="mx-formpanel">
+	<form class="ajaxform" method="post" action="clips/adv/do/?Data-add.html">
+	  <fieldset style="width:500px;">
+	  <legend>新增广告位</legend>
+	  <table border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="500">
+		  	<label>广告位名称</label>
+			<input type="text" autocomplete="off" name="ptitle" class="text" value="" dataType="Require" itip="请填写广告位名称">
+		  </td>
+        </tr>
+		<tr>
+          <td width="500">
+		  	<label>广告模型</label>
+			<select name="advmid" dataType="Require" itip="请选择广告模型">
+				<option value="">请选择广告模型</option>
+				<%loop class="Advmod" method="getlist"%>
+				<option value="<%$list.id%>"><%$list.atitle%></option>
+				<%/loop%>
+			</select>
+		  </td>
+        </tr>
+		<tr>
+          <td width="500">
+		  	<label>宽</label>
+			<input type="text" autocomplete="off" name="width" class="text" value="" dataType="Number" itip="请填写宽">
+		  </td>
+        </tr>
+		<tr>
+          <td width="500">
+		  	<label>高</label>
+			<input type="text" autocomplete="off" name="height" class="text" value="" dataType="Number" itip="请填写高">
+		  </td>
+        </tr>
+		<tr>
+          <td width="500">
+		  	<label>广告位描述</label>
+			<textarea name="summary" class="textarea"></textarea>
+		  </td>
+        </tr>
+		<tr>
+          <td width="500" class="mx-form-submit">
+		  	<input type="submit" name="submitButton" ajax="menuadd" value="提　交" />
+		  </td>
+        </tr>
+      </table>
+	  </fieldset>
+	</form>
+</div>

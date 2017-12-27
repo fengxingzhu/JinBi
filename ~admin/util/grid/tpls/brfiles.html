@@ -1,0 +1,12 @@
+<style type="text/css">
+.grid-base-brfiles a { display:block; border:1px solid #D5D5D5; float:left; padding:2px; margin:2px; }
+.grid-base-brfiles a:hover { border:1px solid #FDEACC; }
+.grid-base-brfiles a.selected { border:1px solid #FF0000; }
+.grid-base-brfiles a img { margin-bottom:5px; }
+.grid-base-brfiles a input { width:44px; margin:0; padding:0; }
+</style>
+<div class="grid-base-brfiles">
+<%loop class="Grid" method="getfiles"%>
+<a href="javascript:;" lid="<%$list.lid%>" pid="<%$list.id%>" itip="文件名:<%$list.oldname%><br>文件大小:<%$list.size%><br>上传时间:<%$list.uptime%>"><img src="<%$list.file_path%>" width="48" height="48" border="0"  /><br /><input type="text" name="oldname" value="<%$list.oldname%>"/><input type="hidden" name="oldname_ext" value="<%$list.oldext%>" /><br /><input type="text" name="sort" value="<%$list.sort%>" /></a>
+<%/loop%>
+</div>

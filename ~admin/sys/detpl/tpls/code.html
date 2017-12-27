@@ -1,0 +1,11 @@
+<div class="ui-state-default left-tree-top" style="margin-right:0;">
+	<span class="mx-sysmenu"></span> > 模板管理 > 查看代码
+</div>
+<%import class="Detpl" method="getcode"%>
+<div class="mx-toolbar">
+	<a brurl="sys/detpl/?app/id/<% echo $_GET['id']; %>/mdtpl/<% echo $_GET['mdtpl']; %>.html" class="button" href="javascript:;">模板列表</a>
+	<span style="float:right; padding-right:5px; text-decoration:underline; color:#919191;"><%$TPLINFO%></span>
+</div>
+<textarea cutmargin="210,200">
+<%$CODEINFO%>
+</textarea>

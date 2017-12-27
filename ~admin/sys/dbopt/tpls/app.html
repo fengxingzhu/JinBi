@@ -1,0 +1,90 @@
+<%import class="Data" method="tableall"%>
+<div class="ui-state-default left-tree-top" style="margin-right:0;">
+	<span class="mx-sysmenu"></span>
+</div>
+<form id="sys-dbopt-backinfo" method="post" action="sys/dbopt/do/?Data-backdb.html" onsubmit="return false;">
+  <table width="98%" border="0" align="center" cellpadding='0' cellspacing='0'>
+    <tr>
+      <td height="30" colspan="2">&nbsp; <b>备份说明</b></td>
+    </tr>
+    <tr>
+      <td height="30" colspan="2">
+	  	<ul style="margin:0;">
+			<li>服务器备份目录为dbacks</li>
+			<li>对于较大的数据表，强烈建议使用分卷备份</li>
+			<li>只有选择备份到服务器，才能使用分卷备份功能</li>
+		</ul>	  </td>
+    </tr>
+    <tr>
+      <td height="30" colspan="2">&nbsp; <b>备份方式</b></td>
+    </tr>
+    <tr>
+      <td width="31%" height="20"> &nbsp;
+      	<input name="bfzl" type="radio" value="quanbubiao" checked="checked">        备份全部数据
+	  </td>
+      <td width="69%" height="20">&nbsp; 备份全部数据表中的数据到一个备份文件</td>
+    </tr>
+    <tr>
+      <td height="20"> &nbsp;
+        <input type="radio" name="bfzl" value="danbiao">备份单张表 
+        <select name="tablename" id="sys-dbopt-tablesel">
+			<option value="">请选择</option>
+         	<%loop from="tablelist" item="list"%>
+			<option value="<%$list%>"><%$list%></option>
+			<%/loop%>
+     	</select>	  </td>
+      <td height="20">&nbsp; 备份选中数据表中的数据到单独的备份文件</td>
+    </tr>
+    <tr>
+      <td height="30" colspan="2">&nbsp; <b>使用分卷备份</b></td>
+    </tr>
+    <tr>
+      <td height="20" colspan="2"> &nbsp;
+        <input type="checkbox" name="fenjuan" value="yes">
+      分卷备份 <input name="filesize" type="text" size="10">K</td></tr>
+    <tr>
+      <td height="20" colspan="2">&nbsp; 选择目标位置</td>
+    </tr>
+    <tr>
+      <td height="20" colspan="2"> &nbsp;
+      <input type="radio" name="weizhi" value="server" checked>备份到服务器</td></tr><tr class="cells">
+          <td height="20" colspan='2'>  &nbsp;
+            <input type="radio" name="weizhi" value="localpc">
+        备份到本地(只应用备份全部数据)</td>
+      </tr>
+    <tr><td height="20" colspan="2" align='center'><input type="submit" id="sys-dbopt-backsubmit" name="act" value="备份"></td></tr>
+  </table>
+</form>
+<script type="text/javascript">
+$(function(){
+	$("#sys-dbopt-backsubmit").click(function(){
+		var vlocalpc = $('input[name="weizhi"]:checked').val();
+		if(vlocalpc!='localpc') mxmask("正在备份数据库...");
+		$("#sys-dbopt-backinfo").ajaxSubmit({
+			iframe:true,
+			success:function(responseText, statusText, xhr, $form){
+				if(responseText!=""){
+					var ores = encode(responseText);
+					switch(ores.type){
+						case "msg": Tip({title:ores.title?ores.title:"提示",content:ores.msg}); break;
+						case "ajaxcontent": tabtreecontent(ores.url); break;
+						case "tab": tabmenuurl(ores.url); break;
+						case "jump": document.location = ores.url; break;
+					}
+				}
+				$("#mx-submitting").hide();
+			}
+		});
+	});
+	$("#sys-dbopt-tablesel","#sys-dbopt-backinfo").change(function(){
+		if($(this).val()!=""){
+			$('input[value="danbiao"]').attr("checked",true);
+		}
+	});
+	$("input[name='filesize']","#sys-dbopt-backinfo").blur(function(){
+		if($(this).val()!=""){
+			$('input[name="fenjuan"]').attr("checked",true);
+		};
+	});
+});
+</script>

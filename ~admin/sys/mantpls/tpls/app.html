@@ -1,0 +1,45 @@
+<table id="Mantpls-grid">
+  <thead>
+	<tr>
+		<th width="160">模板名称</th>
+		<th width="450">模板文件</th>
+		<th width="100">操作</th>
+	</tr>
+</thead>
+   <tbody>
+		<%loop class="Mantpls" method="getpls"%>
+		<tr>
+			<td><span class="tpllistinfo" n='<%$list.name%>' f='<%$list.file%>'><%$list.name%></span></td>
+			<td><%$list.file%></td>
+			<td><a href="javascript:;" class="mx-list-edit" brurl="sys/mantpls/?code/file/<%$list.file%>">修改</a></td>
+		</tr>
+		<%/loop%>
+</tbody>
+</table>
+<script type="text/javascript">
+$(function(){
+	$('#Mantpls-grid').flexigrid({
+		title:'<span class="mx-sysmenu"></span>',
+		height:'auto',
+		showToggleBtn:false,
+		resizable:false
+	});
+	//模板名称双击修改
+	$('.tpllistinfo').dblclick(function(){
+		var me = this,
+			name = $(me).attr('n'),
+			file = $(me).attr('f');
+		$(this).html('<input class="tpllistedit" type="text" name="'+file+'" value="'+name+'" />');
+		$('.tpllistedit').blur(function(){//编辑修改
+			var me = this,
+				f = $(me).attr('name'),
+				n = $(me).val();
+			mxmask('正在保存...');
+			$.post('sys/mantpls/do/?Mantpls-editname.html',{n:n,f:f},function(text){//修改
+				$(me).parent().html(n);
+				$("#mx-submitting").hide();
+			});
+		});
+	});
+});
+</script>

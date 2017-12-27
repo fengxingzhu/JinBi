@@ -1,0 +1,60 @@
+<style type="text/css">
+.mx-parent-menu { height:30px; line-height:30px; }
+</style>
+<%import class="Mancols" method="getmenuinfo,readpmenu"%>
+<div class="ui-state-default left-tree-top" style="margin-right:0;">
+	<span><span class="mx-sysmenu-tree"></span> -- 修改栏目</span>
+</div>
+<div class="mx-parent-menu"><img src="images/lists.png" align="absmiddle" border="0" />上级栏目：<%$TITLE_GUID%></div>
+<div class="mx-formpanel">
+	<form class="ajaxform" method="post" action="sys/mancols/do/?Mancols-edit/id/<%$info.id%>.html">
+	<textarea name="formDataInfo" class="mx-formdata"><%$data%></textarea>
+	  <table border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="300">
+		  	<label>栏目名称</label>
+			<input type="text" name="title" dataType="Require" itip="请填写栏目名称" /><input name="parent_id" type="hidden" value="<%$PARENT_ID%>" /><input name="typeid" type="hidden" value="1" />
+		  </td>
+        </tr>
+		<tr>
+          <td width="300">
+		  	<label>相关实例</label>
+			<select name="livsid">
+				<option value="">选择相关实例</option>
+				<%loop from="COMPENTS" item="list"%>
+				<option value="<%$list.id%>"><%$list.livname%>(<%$list.proname%>)</option>
+				<%/loop%>
+			</select>
+		  </td>
+        </tr>
+		<tr>
+          <td width="300">
+		  	<label>相关模板规则</label>
+			<select name="rexmid" id="sys-mancols-rexmid">
+				<%$info.rexmidoptions%>
+			</select>
+		  </td>
+        </tr>
+		<tr>
+          <td width="300">
+		  	<label>排　　序</label>
+			<input name="sort" type="text" value="0" />
+		  </td>
+        </tr>
+		<tr>
+          <td width="300" class="mx-form-submit">
+		  	<input type="submit" name="submitButton" value="提　交" />		  </td>
+        </tr>
+      </table>
+	</form>
+</div>
+<script type="text/javascript">
+//相关模板规则
+function selectplmenurl(t)
+{
+	var omts = $('#sys-mancols-rexmid');
+	$.get('sys/mancols/do/?Mancols-getsameminfo/livsid/'+t.value+'.html',function(text){
+		omts.html(text);
+	});
+}
+</script>

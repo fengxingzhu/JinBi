@@ -1,0 +1,51 @@
+<%import class="Form" method="getform,getsyngrade,fieldplusjs"%>
+<%$FORMJS%>
+<div class="ui-state-default left-tree-top" style="margin-right:0;">
+	<span><span class="mx-sysmenu"></span><%$REXTITLE%> -- 新增</span>
+</div>
+<div class="mx-toolbar">
+	<a href="javascript:;" class="button" brurl="util/grid/?app/ag/<%$CONFINI.proname%>/tp/<%$TP%>.html"><span class="mx-sysmenu-tree"></span>列表</a>
+</div>
+<div class="mx-formpanel" cutmargin="0,200">
+	<form class="ajaxform" method="post" action="util/grid/do/?Form-add/ag/<%$CONFINI.proname%>/tp/<%$TP%>.html">
+	  <fieldset style="width:<%$FIELDSETWIDTH%>px;">
+	  <legend>新增<span class="mx-sysmenu-tree"></span></legend>
+	  <input type="hidden" name="__syninfo" value="<%$syngradeinfo%>" />
+	  <%$FIELDNODISPLAY%>
+	  <table border="0">
+	  	<tr>
+        <%$FIELDPANEL%>
+		</tr>
+		<% if($VAL['CONFINI']['cfg_top_key']==1 || $VAL['CONFINI']['cfg_pub_key']==1){ %>
+		<tr>
+          <td width="<%$FIELDSETWIDTH%>" colspan="<%$FIELDCOLSPAN%>">
+		  <label>发布信息</label>
+		  <% if($VAL['CONFINI']['cfg_top_key']==1){ %>
+		  <div style="width:50%; float:left;">
+		  	置顶： 是<input name="__systop" type="radio" value="1" style="height:12px; line-height:12px;" />　　否<input name="__systop" type="radio" value="0" style="height:12px; line-height:12px;" checked="checked" />
+		  </div>
+		  <% } %>
+		  <% if($VAL['CONFINI']['cfg_pub_key']==1){ %>
+		  <div style="width:50%; float:left;">
+		  	是否发布： 是<input name="__syspub" type="radio" value="1" style="height:12px; line-height:12px;" checked="checked" />　　否<input name="__syspub" type="radio" value="0" style="height:12px; line-height:12px;" />
+		  </div>
+		  <% } %>
+		  </td>
+        </tr>
+		<% }else{ %>
+		<tr style="display:none;">
+			<td width="<%$FIELDSETWIDTH%>" colspan="<%$FIELDCOLSPAN%>">
+				<input name="__systop" type="radio" value="0" checked="checked" />
+				<input name="__syspub" type="radio" value="1" checked="checked" />
+			</td>
+		</tr>
+		<% } %>
+		<tr>
+          <td width="<%$FIELDSETWIDTH%>" class="mx-form-submit" colspan="<%$FIELDCOLSPAN%>">
+		    <input type="submit" name="submitButton" value="提　交" />
+		  </td>
+        </tr>
+      </table>
+	  </fieldset>
+	</form>
+</div>

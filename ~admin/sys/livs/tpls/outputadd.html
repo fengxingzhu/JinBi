@@ -1,0 +1,49 @@
+<%import class="Output" method="getapplivs"%>
+<div class="ui-state-default left-tree-top" style="margin-right:0;">
+	<span><span class="mx-sysmenu"></span> > <%$applivs.appname%> > 导出设置 > 新增</span>
+</div>
+<div class="mx-toolbar">
+	<a href="javascript:;" class="button" brurl="sys/livs/?outputlist/fid/<%$applivs.id%>.html"><%$applivs.appname%></a>
+</div>
+<div class="mx-formpanel">
+	<form class="ajaxform" method="post" action="sys/livs/do/?Output-add.html">
+	  <fieldset style="width:500px;">
+	  <legend>新增</legend>
+	  <table border="0" cellspacing="0" cellpadding="0">
+		<tr>
+          <td width="500">
+		    <label>标题</label>
+			<input type="text" name="title" dataType="Require" itip="请填写标题" /><input name="appid" type="hidden" value="<%$applivs.id%>">
+		  </td>
+        </tr>
+		<tr>
+          <td width="500">
+		    <label>前台连接[当前信息ID标记为(id),当前分类ID标记为(tid),以网站根目录为起始]</label>
+			<input type="text" name="url" dataType="Require" itip="请填写前台连接" />
+		  </td>
+        </tr>
+		<tr>
+          <td width="500">
+		    <label>导出类型</label>
+			<select name="outype"  dataType="Require" itip="请选择导出类型">
+				<option value="doc">Word</option>
+				<option value="xls">Excel</option>
+				<option value="ppt">PowerPoint</option>
+			</select>
+		  </td>
+        </tr>
+		<tr>
+          <td width="500">
+		    <label>排序</label>
+			<input type="text" name="sort" dataType="Require" itip="请填写排序" value="0" />
+		  </td>
+        </tr>
+		<tr>
+          <td width="500" class="mx-form-submit">
+		    <input type="submit" name="submitButton" value="提　交" />
+		  </td>
+        </tr>
+      </table>
+	  </fieldset>
+	</form>
+</div>

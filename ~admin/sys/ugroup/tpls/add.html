@@ -1,0 +1,136 @@
+<style type="text/css">
+.group-checkbox { margin:0; padding:0; }
+.group-checkbox ul { margin:0 0 0 16px; padding:0; }
+.group-checkbox li input { float:left; }
+.group-checkbox li { padding: 3px 0 2px 16px; clear:both; list-style:none; }
+.group-checkbox span.folder, .filetree span.file { padding: 1px 0 1px 16px; display: block; }
+.group-checkbox a { cursor:default; }
+.group-checkbox span.optools { cursor:pointer; margin:0 5px; }
+.group-checkbox span.optools .icon { color:#FF0000; }
+</style>
+<div class="ui-state-default left-tree-top">
+	<span><span class="mx-sysmenu"></span> > 新增</span>
+</div>
+<div class="mx-toolbar">
+	<a href="javascript:;" class="button" brurl="sys/ugroup/?app.html"><span class="mx-sysmenu-tree"></span></a>
+</div>
+<%import class="Ugroup" method="getcol"%>
+<div class="mx-formpanel">
+	<form class="ajaxform" method="post" action="sys/ugroup/do/?Ugroup-add.html">
+	  <fieldset style="width:500px;">
+	  <legend>新增<span class="mx-sysmenu-tree"></span></legend>
+	  <table border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="500">
+		    <label>角色名称</label>
+			<input type="text" name="title" dataType="Require" itip="请填写角色名称" /><input type="hidden" name="powids" id="groups-powids" /><input type="hidden" name="syninfo" id="groups-syninfo" /><input type="hidden" name="optools" id="groups-optools" />
+		  </td>
+        </tr>
+        <tr>
+          <td width="500">
+		    <label>栏目列表</label>
+			<ul class="group-checkbox">
+				<%$__TREELIST%>
+			</ul>
+		  </td>
+        </tr>
+		<tr>
+          <td width="500" class="mx-form-submit">
+		    <input type="submit" name="submitButton" value="提　交" />
+		  </td>
+        </tr>
+      </table>
+	  </fieldset>
+	</form>
+</div>
+<script type="text/javascript">
+$(function(){
+	//权限选择
+	$(".group-checkbox input[type='checkbox'][name='ggroups']").click(function(){
+		//子目录
+		var c = $(this).parent().find("input");
+		var b = $(this).attr('checked');
+		b = b?b:false;
+		c.each(function(){
+			$(this).attr('checked',b);
+		});
+		
+		var m = $(this).parent().parent('ul').find('input');
+		var count = 0;
+		m.each(function(){
+			if($(this).attr('checked')){
+				count++;
+			}
+		});
+		//父目录
+		var p = $(this).parents('li');//父目录
+		p.each(function(){
+			var o = $(this).find('input');
+			if(count){
+				o[0].checked = true;
+			}else{
+				o[0].checked = !o[0].checked;
+			}
+		});
+		$(this).attr('checked',b);
+		//读取所有input
+		var ids = [];
+		$(".group-checkbox input[type='checkbox'][name='ggroups']").each(function(i,o){
+			if($(o).attr('checked')) ids.push($(o).val());
+		});
+		$("#groups-powids").val(ids.join(","));
+	});
+	//审核选择
+	$('select[name="syngrade"]').change(function(){
+		var oldv = $("#groups-syninfo").val(),
+			eoldv = oldv.split(','),
+			eolen = eoldv.length,
+			chkboxv = $(this).parent().parent().find('input[type="checkbox"][name="ggroups"]').val(),
+			resp = chkboxv+':'+this.value;
+		if(eolen==1){
+			eoldv.push(resp);
+		}else{
+			var is = false;
+			for(var i=0;i<eolen;i++){
+				if(eoldv[i]!=''){
+					if(eoldv[i].indexOf(chkboxv+':')>-1){//存在
+						eoldv[i] = resp;
+						is = true;
+					}
+				}
+			}
+			if(!is) eoldv.push(resp);
+		}
+		$("#groups-syninfo").val(eoldv.join(','));
+	});
+	//操作权限
+	$('.group-checkbox span.optools').click(function(){
+		var oicon = $(this).find('.icon');
+		if(oicon.text()==''){//选中
+			oicon.text('√');
+		}else{//不选中
+			oicon.text('');
+		}
+		getgroupoptjson();
+	});
+	//初始权限
+	getgroupoptjson();
+});
+function getgroupoptjson()
+{
+	var optjson = {};
+	$('.group-checkbox span[menuid]').each(function(i,o){
+		var menuid = $(this).attr('menuid'),
+			aoptool = [];
+		$('span.optools .icon',this).each(function(){
+			if($(this).text()!=''){
+				aoptool.push($(this).attr('mkey'));
+			}
+		});
+		if(aoptool.length>0){
+			optjson[menuid] = aoptool.join(',');
+		}
+	});
+	$('#groups-optools').val($.toJSON(optjson));
+}
+</script>

@@ -1,0 +1,17 @@
+<div class="ui-state-default left-tree-top" style="margin-right:0;">
+	<span class="mx-sysmenu"></span> > 修改
+</div>
+<%import class="Mantpls" method="getcode"%>
+<div class="mx-toolbar">
+	<a brurl="sys/mantpls/?app.html" class="button" href="javascript:;">模板管理</a>
+	<span style="float:right; padding-right:5px; text-decoration:underline; color:#919191;"><%$TPLINFO%></span>
+</div>
+<form class="ajaxform" method="post" action="sys/mantpls/do/?Mantpls-save.html">
+<textarea name="code" cutmargin="210,230">
+<%$CODEINFO%>
+</textarea>
+<input name="filept" type="hidden" value="<%$TPLINFO%>" />
+<div style="float:right; padding-right:5px;">
+<input type="submit" name="submitButton" value="保存模板" />
+</div>
+</form>

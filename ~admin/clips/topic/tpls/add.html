@@ -1,0 +1,65 @@
+<div class="ui-state-default left-tree-top" style="margin-right:0;">
+	<span><span class="mx-sysmenu-tree"></span> > 新增专题</span>
+</div>
+<div class="mx-toolbar">
+	<a class="button" brurl="clips/topic/?app.html" href="javascript:;">返回<span class="mx-sysmenu-tree"></span></a>
+</div>
+<div class="mx-formpanel">
+	<form class="ajaxform" method="post" action="clips/topic/do/?Data-add.html">
+	  <fieldset style="width:500px;">
+	  <legend>新增专题</legend>
+	  <table border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="500">
+		  	<label>专题名称</label>
+			<input type="text" autocomplete="off" name="title" class="text" value="" dataType="Require" itip="请填写专题名称">
+		  </td>
+        </tr>
+		<tr>
+          <td width="500">
+		  	<label>关键字(keywords)</label>
+			<textarea style="height: 50px;" name="keyword"></textarea>
+		  </td>
+        </tr>
+		<tr>
+          <td width="500">
+		  	<label>描述(description)</label>
+			<textarea style="height: 50px;" name="description"></textarea>
+		  </td>
+        </tr>
+		<tr>
+          <td width="500">
+		  	<label>风格选择</label>
+			<select name="sname" dataType="Require" itip="请选择风格">
+				<option keyid="" value="">请选择风格</option>
+				<%loop class="TStyle" method="getlist"%>
+				<option keyid="<%$list.id%>" value="<%$list.sname%>"><%$list.sname%></option>
+				<%/loop%>
+			</select>
+			<input type="hidden" value="1" name="sname_key">
+		  </td>
+        </tr>
+		<tr>
+          <td width="500">
+		  	<label>logo图片</label>
+			<input type="file" id="sys-clips-topic" autocomplete="off" name="logo" cw="0" ch="0" prefix="../" class="imgupload" value="" onchange="return mxajaxFileUpload(this);">
+			<input name="logo" type="hidden" id="sys-clips-topic-name" value="" />
+			<input name="logo_path" type="hidden" id="sys-clips-topic-path" value="" />
+			<img id="sys-clips-topic-src" style="display:none" src="" />
+		  </td>
+        </tr>
+		<tr>
+          <td width="500">
+		  	<label>排序</label>
+			<input type="text" autocomplete="off" name="sort" class="text" value="">
+		  </td>
+        </tr>
+		<tr>
+          <td width="500" class="mx-form-submit">
+		  	<input type="submit" name="submitButton" ajax="menuadd" value="提　交" />
+		  </td>
+        </tr>
+      </table>
+	  </fieldset>
+	</form>
+</div>

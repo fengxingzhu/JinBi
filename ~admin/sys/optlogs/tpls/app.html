@@ -1,0 +1,73 @@
+<table id="Optlogs-grid"></table>
+<script type="text/javascript">
+$(function(){
+	$('#Optlogs-grid').flexigrid({
+		title:'<span class="mx-sysmenu"></span>',
+		url:'sys/optlogs/do/?Data-glist/',
+		dataType:'json',
+		height:'auto',
+		colModel:[
+			{
+				display :"时间",
+				name:"optdate",
+				width:140,
+				sortable:true,
+				align:"left"
+			},
+			{
+				display :"用户",
+				name:"name",
+				width:60,
+				sortable:true,
+				align:"left"
+			},
+			{
+				display :"类型",
+				name:"optype",
+				width:60,
+				sortable:true,
+				align:"left"
+			},
+			{
+				display :"栏目",
+				name:"mname",
+				width:260,
+				sortable:true,
+				align:"left"
+			},
+			{
+				display :"详情",
+				name:"details",
+				width:60,
+				sortable:true,
+				align:"center"
+			}
+		],
+		sortname: "optdate",
+		sortorder: "desc",
+		usepager:true,
+		rp:20,
+		checkbox:false,
+		showToggleBtn:false,
+		resizable:false,
+		onToggleCol:true,
+		searchitems:[
+			{
+				display:'全部内容',
+				name:'__allkeyword'
+			},
+			{
+				display:'用户',
+				name:'name'
+			},
+			{
+				display:'栏目',
+				name:'mname'
+			}
+		],
+		onSuccess:function(){
+			loadpubfn();
+		}
+	});
+});
+</script>

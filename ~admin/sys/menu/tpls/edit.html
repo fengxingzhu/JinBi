@@ -1,0 +1,40 @@
+<style type="text/css">
+.mx-parent-menu { height:30px; line-height:30px; }
+</style>
+<%import class="Menu" method="getmenuinfo,readpmenu"%>
+<div class="ui-state-default left-tree-top" style="margin-right:0;">
+	<span>菜单管理 -- 修改菜单</span>
+</div>
+<div class="mx-parent-menu"><img src="images/lists.png" align="absmiddle" border="0" />上级菜单：<%$TITLE_GUID%></div>
+<div class="mx-formpanel">
+	<form class="ajaxform" method="post" action="sys/menu/do/?Menu-edit/id/<%$info.id%>.html">
+	<textarea name="formDataInfo" class="mx-formdata"><%$data%></textarea>
+	  <table border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="300">
+		  	<label>菜单名称</label>
+			<input type="text" name="title" dataType="Require" itip="请填写菜单名称" />
+			<input name="parent_id" type="hidden" value="<%$PARENT_ID%>" />
+			<input name="typeid" type="hidden" value="0" />
+		  </td>
+        </tr>
+        <tr>
+          <td width="300">
+		  	<label>连接地址</label>
+			<input name="admurl" type="text" />
+		  </td>
+        </tr>
+		<tr>
+          <td width="300">
+		  	<label>排　　序</label>
+			<input name="sort" type="text" value="0" />
+		  </td>
+        </tr>
+		<tr>
+          <td width="300" class="mx-form-submit">
+		  	<input type="submit" name="submitButton" value="提　交" />
+		  </td>
+        </tr>
+      </table>
+	</form>
+</div>

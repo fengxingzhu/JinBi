@@ -1,0 +1,32 @@
+<div class="ui-state-default left-tree-top" style="margin-right:0;">
+	<span><span class="mx-sysmenu"></span> > 新增关键字信息</span>
+</div>
+<div class="mx-toolbar">
+	<a href="javascript:;" class="button" brurl="weixin/?autoreply.html"><span class="mx-sysmenu-tree"></span></a>
+</div>
+<div class="mx-formpanel">
+	<form class="ajaxform" method="post" action="weixin/do/?AutoReply-add.html">
+	  <fieldset style="width:500px;">
+	  <legend>新增关键字信息</legend>
+	  <table border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="500">
+		  	<label text="关键字">关键字</label>
+			<input type="text" name="keyword" dataType="Require" itip="请填写关键字" />
+		  </td>
+        </tr>
+		<tr>
+          <td width="500">
+		  	<label text="回复内容">回复内容</label>
+			<textarea name="reply" datatype="Require" itip="请填写回复内容"></textarea>
+		  </td>
+        </tr>
+		<tr>
+          <td width="500" class="mx-form-submit">
+		  	<input type="submit" name="submitButton" value="提　交" />
+		  </td>
+        </tr>
+      </table>
+	  </fieldset>
+	</form>
+</div>

@@ -1,0 +1,42 @@
+<%import class="Apps" method="getadd"%>
+<div class="ui-state-default left-tree-top" style="margin-right:0;">
+	<span>组件模型 -- 创建实例</span>
+</div>
+<div class="mx-toolbar">
+	<a href="javascript:;" class="button" valurl="fieldparenturl" chvalurl="url">组件模型</a>
+</div>
+<div class="mx-formpanel">
+	<form class="ajaxform" method="post" action="sys/apps/do/?Apps-add/tp/<%$TP%>/dir/<%$DIR%>.html">
+	  <fieldset style="width:300px;">
+	  <legend>创建(<%$info.name%>)实例</legend>
+	  <input type="hidden" name="jumpurl" id="sys-apps-jumpurl"/>
+	  <input type="hidden" name="mtype" value="<% echo $_GET['mtype']; %>" />
+	  <table border="0" cellspacing="0" cellpadding="0">
+		<tr>
+          <td width="300">
+		    <label>实例分组</label>
+			<select name="gid" dataType="Require" itip="请选择实例分组">
+				<%loop class="Apgs" method="getgroups" path="../apgs"%>
+					<option value="<%$list.id%>"><%$list.gname%>(<%$list.gdir%>)</option>
+				<%/loop%>
+			</select>
+		  </td>
+        </tr>
+		
+		<%$supstr%>
+		
+		<tr>
+          <td width="300" class="mx-form-submit">
+		    <input type="submit" name="submitButton" value="提　交" />		  
+		  </td>
+        </tr>
+      </table>
+	  </fieldset>
+	</form>
+</div>
+<script type="text/javascript">
+$(function(){
+	var param = $.mx.getparam();
+	$("#sys-apps-jumpurl").val(param["fieldparenturl"]);
+});
+</script>

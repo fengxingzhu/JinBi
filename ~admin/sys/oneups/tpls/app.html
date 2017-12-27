@@ -1,0 +1,50 @@
+<%import class="Data" method="getups"%>
+<div class="ui-state-default left-tree-top" style="margin-right:0;">
+	<span><span class="mx-sysmenu-tree"></span></span>
+</div>
+<div class="mx-toolbar">
+	<a href="javascript:;" class="button" id="oneups-cachefileall">一键更新网站静态缓存文件</a>
+	<a href="javascript:;" class="button" id="oneups-searchsite">一键更新全站搜索</a>
+</div>
+<div id="oneups-cache-tip" style="margin:10px;">
+	<div id="oneups-col-name" style="color:#FF0000;"></div>
+</div>
+<div id="oneups-cache-finish" style="margin:10px;color:#FF0000;"></div>
+<script type="text/javascript">
+var ONEUPS_IDDATAS = <%$IDdata%>,
+	ONEUPS_IDNUM = ONEUPS_IDDATAS.length;
+function oneups_res_updata(n)
+{
+	if(ONEUPS_IDNUM>n){
+		var dd = ONEUPS_IDDATAS[n];
+		$('#oneups-col-name').html('正在更新栏目:'+dd['title']);
+		$.get('sys/oneups/do/?Data-doup/id/'+dd['id']+'/',function(text){
+			oneups_res_updata(++n);
+		});
+	}else{
+		$('#oneups-cache-finish').html('<b>缓存文件更新完成!</b>').show();
+		$('#oneups-cache-tip').hide();
+	}
+}
+$(function(){
+	$('#oneups-cachefileall').click(function(){
+		if(ONEUPS_IDNUM>0){//循环更新
+			$('#oneups-cache-finish').hide();
+			$('#oneups-cache-tip').show();
+			oneups_res_updata(0,ONEUPS_IDDATAS);
+		}else{//无缓存文件
+			$('#oneups-cache-finish').html('<b>无需要更新的缓存文件!</b>').show();
+			$('#oneups-cache-tip').hide();
+		}
+	});
+	//一键更新全站搜索
+	$('#oneups-searchsite').click(function(){
+		$('#oneups-col-name').html('正在更新全站搜索中...');
+		$('#oneups-cache-tip').show();
+		$.get('sys/oneups/do/?Data-upsites',function(text){
+			$('#oneups-cache-finish').html('<b>全站搜索更新成功!</b>').show();
+			$('#oneups-cache-tip').hide();
+		});
+	});
+});
+</script>

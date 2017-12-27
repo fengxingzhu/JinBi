@@ -1,0 +1,27 @@
+<%import class="Form" method="getinfo,getform,fieldplusjs"%>
+<%$FORMJS%>
+<div class="ui-state-default left-tree-top" style="margin-right:0;">
+	<span><span class="mx-sysmenu"></span><%$REXTITLE%></span>
+</div>
+<div class="mx-toolbar">
+	<a href="javascript:;" class="button" url="util/form/?app/ag/<%$CONFINI.proname%>/tp/<%$TP%>.html"><span class="mx-sysmenu-tree"></span></a>
+</div>
+<div class="mx-formpanel" cutmargin="0,200">
+	<form class="ajaxform" method="post" action="util/form/do/?Form-edit/ag/<%$CONFINI.proname%>/tp/<%$TP%>.html">
+	  <fieldset style="width:<%$FIELDSETWIDTH%>px;">
+	  <textarea name="formDataInfo" class="mx-formdata"><%$data%></textarea>
+	  <legend>修改<span class="mx-sysmenu-tree"></span></legend>
+	  <%$FIELDNODISPLAY%>
+	  <table border="0">
+	  	<tr>
+        <%$FIELDPANEL%>
+		</tr>
+		<tr>
+          <td width="<%$FIELDSETWIDTH%>" class="mx-form-submit" colspan="<%$FIELDCOLSPAN%>">
+		    <input type="submit" name="submitButton" value="提　交" />
+		  </td>
+        </tr>
+      </table>
+	  </fieldset>
+	</form>
+</div>

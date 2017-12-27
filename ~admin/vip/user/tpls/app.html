@@ -1,0 +1,130 @@
+<table id="Clipsuser-grid">  
+</table>
+<script type="text/javascript">
+$(function(){
+	$('#Clipsuser-grid').flexigrid({
+		title:'<span class="mx-sysmenu"></span>',
+		url:'vip/user/do/?Data-getlist/',
+		dataType:'json',
+		height:'auto',
+		colModel:[
+			{
+				display :"UID",
+				name:"id",
+				width:60,
+				sortable:true,
+				align:"left"
+			},
+			{
+				display :"用户名",
+				name:"username",
+				width:120,
+				sortable:true,
+				align:"left"
+			},
+			{
+				display :"昵称",
+				name:"niname",
+				width:120,
+				sortable:true,
+				align:"left"
+			},
+			{
+				display :"Email",
+				name:"email",
+				width:160,
+				sortable:true,
+				align:"left"
+			},
+			{
+				display :"手机号码",
+				name:"phone",
+				width:160,
+				sortable:true,
+				align:"left"
+			},
+			{
+				display :"状态",
+				name:"passed",
+				width:60,
+				sortable:true,
+				align:"left"
+			},
+			{
+				display :"注册时间",
+				name:"regdate",
+				width:120,
+				sortable:true,
+				align:"left"
+			},
+			{
+				display :"操作",
+				name:"__opt",
+				width:120,
+				sortable:true,
+				align:"left"
+			}
+		],
+		sortname: "id",
+		sortorder: "desc",
+		usepager:true,
+		rp:20,
+		checkbox:true,
+		showToggleBtn:false,
+		resizable:false,
+		onToggleCol:true,
+		onSuccess:function(){
+			loadpubfn();
+		},
+		buttons : [
+			{
+				name:'新增',
+				bclass:'mx-add',
+				onpress:function(){
+					var url = "vip/user/?add.html";
+					tabtreecontent(url);
+				}
+			},
+			{
+				separator: true
+			},
+			{
+				name: '删除',
+				bclass: 'mx-delete',
+				onpress : function(){
+					var ids = [];
+					$('#Clipsuser-grid input[type="checkbox"][class="noborder"]').each(function(i,o){
+						var _val = $(o).val();
+						_val = _val.substr(3,_val.length);
+						$(o).attr("checked")?ids.push(_val):"";
+					});
+					var _ids = ids.join(",");
+					if(_ids==""){
+						Tip({title:'删除提示:',content:'请选择要删除列表项'});
+					}else{
+						dialog({
+							title:'提示',
+							content:'确定删除这些吗?,确定后删除将不能恢复!',
+							resizable:false,
+							bgiframe:false,
+							buttons:{
+								'是': function(){
+									var me = this;
+									$.post('vip/user/do/?Data-del/',{ids:_ids},function(text){
+										Tip({title:'批量删除提示:',content:'批量删除成功!'});
+										tabtreecontent('vip/user/?app.html');
+										$(me).dialog('destroy');
+									});
+								},
+								'否': function() {
+									$(this).dialog('destroy');
+								}
+							}
+						});
+					}
+				}
+			}
+		]
+	});
+});
+</script>

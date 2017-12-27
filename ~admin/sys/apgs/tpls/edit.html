@@ -1,0 +1,34 @@
+<div class="ui-state-default left-tree-top" style="margin-right:0;">
+	<span><span class="mx-sysmenu"></span> -- 修改分类</span>
+</div>
+<div class="mx-toolbar">
+	<a href="javascript:;" class="button" brurl="sys/apgs/?app.html"><span class="mx-sysmenu-tree"></span></a>
+</div>
+<%import class="Apgs" method="getinfo"%>
+<div class="mx-formpanel">
+	<form class="ajaxform" method="post" action="sys/apgs/do/?Apgs-edit/id/<%$info.id%>.html">
+	  <fieldset style="width:300px;">
+	  <textarea name="formDataInfo" class="mx-formdata"><%$data%></textarea>
+	  <legend>修改分类(<%$info.gname%>)</legend>
+	  <table border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="300">
+		    <label>分类名称</label>
+			<input type="text" name="gname" dataType="Require" itip="请填写分类名称" />
+		  </td>
+        </tr>
+		<tr>
+          <td width="300">
+		    <label>分类标识(表名前缀)</label>
+			<input type="text" name="gdir" disabled="disabled" />
+		  </td>
+        </tr>
+		<tr>
+          <td width="300" class="mx-form-submit">
+		    <input type="submit" name="submitButton" value="提　交" />		  
+		  </td>
+        </tr>
+      </table>
+	  </fieldset>
+	</form>
+</div>

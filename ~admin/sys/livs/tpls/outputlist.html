@@ -1,0 +1,48 @@
+<%import class="Output" method="getlist,getapplivs"%>
+<div class="ui-state-default left-tree-top" style="margin-right:0;">
+	<span class="mx-sysmenu"></span> > <%$applivs.appname%> > 导出设置
+</div>
+<table id="User-grid">
+	<thead>
+		<tr>
+			<th width="40">排序</td>
+			<th width="260">标题</th>
+			<th width="260">前台连接</th>
+			<th width="100">导出类型</th>
+			<th width="120">操作</th>
+		</tr>
+	</thead>
+	<tbody>
+		<%loop from="data" item="list"%>
+		<tr>
+			<td><%$list.sort%></td>
+			<td><%$list.title%></td>
+			<td><%$list.url%></td>
+			<td><%$list.outype%></td>
+			<td><a href="javascript:;" brurl="sys/livs/?outputedit/fid/<%$applivs.id%>/id/<%$list.id%>.html" class="mx-list-edit">修改</a><a href="javascript:;" class="mx-list-remove" delid="<%$list.id%>" delname="<%$list.bakurl%>" delurl="sys/livs/do/?Output-del" backurl="sys/livs/?outputlist/fid/<%$applivs.id%>.html">删除</a></td>
+		</tr>
+		<%/loop%>
+	</tbody>
+</table>
+<script type="text/javascript">
+$(function(){
+	$('#User-grid').flexigrid({
+		title:'<span class="mx-sysmenu-tree"></span> > <%$applivs.appname%> > 导出设置',
+		height:'auto',
+		showToggleBtn:false,
+		resizable:false,
+		defcheckbox:true,
+		buttons : [
+			{
+				name:'新增',
+				bclass:'mx-add',
+				onpress:function(){
+					var url = "sys/livs/?outputadd/fid/<%$applivs.id%>.html";
+					tabtreecontent(url);
+					$.mx.setparam('url',url);
+				}
+			}
+		]
+	});
+});
+</script>

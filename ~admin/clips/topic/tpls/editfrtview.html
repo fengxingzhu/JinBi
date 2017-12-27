@@ -1,0 +1,102 @@
+<style type="text/css">
+#edit_list_mods .tlink { margin:5px 0; }
+</style>
+<div class="ui-state-default left-tree-top" style="margin-right:0;">
+	<span><span class="mx-sysmenu-tree"></span> > 编辑版块</span>
+</div>
+<div class="mx-toolbar">
+	<a class="button" brurl="clips/topic/?frtview/pid/<% echo $_GET['pid']; %>.html" href="javascript:;">返回版块管理</a>
+</div>
+<%import class="BlockMan" method="getbfinfo"%>
+<div class="mx-formpanel">
+	<form class="ajaxform" method="post" action="clips/topic/do/?BlockMan-edit/pid/<% echo $_GET['pid']; %>/id/<% echo $_GET['id']; %>.html">
+	  <fieldset style="width:700px;">
+	  <legend>编辑版块</legend>
+		<% if($VAL['block']['editnum']=='0'){ %><div><a href="javascript:;" id="addtitlelinks" style=" font-size:14px; font-weight:bold; float:right;">新增版块信息</a></div><div style="clear:both;"></div><% } %>
+		<div id="edit_list_mods">
+			<input type="hidden" name="editnum" value="<%$block_nums%>" />
+			<input type="hidden" name="editdel" value="" />
+			<% for($i=0;$i<$VAL['block_nums'];$i++){ %>
+			<fieldset <% if($i==0){ %>id="edit_one_mods"<% } %> class="tlink" sn="<% echo $i; %>">
+				<legend>版块信息(<i class="num"><% echo $i+1; %></i>)</legend>
+				<div style="width:96%;display:<%$fieldsv.0%>">
+					<label text="标题">标题</label>
+					<input class="text" type="text" name="title_<% echo $i; %>" value="<% echo $VAL['data'][$i]['title']; %>" datatype="Require" itip="请填写标题">
+				</div>
+				<div style="width:96%;display:<%$fieldsv.1%>">
+					<label text="连接">连接</label>
+					<input class="text" type="text" name="link_<% echo $i; %>" value="<% echo $VAL['data'][$i]['link']; %>" datatype="Require" itip="请填写连接">
+				</div>
+				<div style="width:96%;display:<%$fieldsv.2%>">
+					<label>图片</label>
+					<input type="file" id="sys-advs-uploadpics<% echo $i+1; %>" autocomplete="off" name="pic" cw="<% echo $VAL['whinfo'][$i]['width']; %>" ch="<% echo $VAL['whinfo'][$i]['height']; %>" prefix="../" class="imgupload" value="" onchange="return mxajaxFileUpload(this);">
+					<input name="pic_<% echo $i; %>" type="hidden" id="sys-advs-uploadpics<% echo $i+1; %>-name" value="<% echo $VAL['data'][$i]['pic']; %>" />
+					<input name="pic_path_<% echo $i; %>" type="hidden" id="sys-advs-uploadpics<% echo $i+1; %>-path" value="<% echo $VAL['data'][$i]['pic_path']; %>" />
+					<img id="sys-advs-uploadpics<% echo $i+1; %>-src" style="display:<%$fieldsv.2%>" src="../<% echo $VAL['data'][$i]['pic_path']; %>" />
+				</div>
+				<div style="width:96%;display:<%$fieldsv.3%>">
+					<label>简介</label>
+					<input class="text" type="text" name="intro_<% echo $i; %>" value="<% echo $VAL['data'][$i]['intro']; %>">
+				</div>
+				<div style="width:96%;display:<%$fieldsv.4%>">
+					<label>作者</label>
+					<input class="text" type="text" name="author_<% echo $i; %>" value="<% echo $VAL['data'][$i]['author']; %>">
+				</div>
+				<div style="width:96%;display:<%$fieldsv.5%>">
+					<label>时间</label>
+					<input class="text Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" type="text" name="date_<% echo $i; %>" value="<% echo $VAL['data'][$i]['date']; %>">
+				</div>
+				<div style="text-align:right;"><a href="javascript:;" class="deleditblocks">删除</a></div>
+			</fieldset>
+			<% } %>
+		</div>
+	  <table border="0" cellspacing="0" cellpadding="0">
+          <td width="500" class="mx-form-submit">
+		  	<input type="submit" name="submitButton" ajax="menuadd" value="提　交" />
+		  </td>
+        </tr>
+      </table>
+	  </fieldset>
+	</form>
+</div>
+<script type="text/javascript">
+//删除
+function __deleditblock()
+{
+	var onesp = $(this).parent().parent().parent(),
+		odel = $('#edit_list_mods input[name="editdel"]'),
+		delval = odel.val().split(',');
+	delval.push(onesp.attr('sn'));
+	//过滤为空的
+	var resdelid = [],resdelen = delval.length;
+	for(i=0;i<resdelen;i++){
+		if(delval[i]!='')
+			resdelid.push(delval[i]);
+	}
+	odel.val(resdelid.join(","));
+	onesp.remove();
+}
+$(function(){
+	//新增
+	$('#addtitlelinks').click(function(){
+		var opd = $('#edit_one_mods').clone().removeAttr('id'),
+			oedit = $('#edit_list_mods input[name="editnum"]'),
+			editnum = parseInt(oedit.val()),
+			nextnum = editnum+1;
+		$('#edit_list_mods').append(opd);
+		opd.attr('sn',editnum);
+		opd.find('input[name^="title_"]').attr('name','title_'+editnum).val("");
+		opd.find('input[name^="link_"]').attr('name','link_'+editnum).val("");
+		opd.find('#sys-advs-uploadpics1').attr('id','sys-advs-uploadpics'+nextnum);
+		opd.find('input[name^="pic_"]').attr('id','sys-advs-uploadpics'+nextnum+'-name').attr('name','pic_'+editnum).val("");
+		opd.find('input[name^="pic_path_"]').attr('id','sys-advs-uploadpics'+nextnum+'-path').attr('name','pic_path_'+editnum).val("");
+		opd.find('#sys-advs-uploadpics1-src').attr('id','sys-advs-uploadpics'+nextnum+'-src').attr('src','');
+		opd.find('.num').text(nextnum);
+		oedit.val(nextnum);//数量增加1
+		opd.find('.deleditblocks').click(__deleditblock);//删除
+		return false;
+	});
+	//删除
+	$('.deleditblocks').click(__deleditblock);
+});
+</script>

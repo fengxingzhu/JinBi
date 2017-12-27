@@ -1,0 +1,32 @@
+<div class="ui-state-default left-tree-top" style="margin-right:0;">
+	<span><span class="mx-sysmenu-tree"></span> > 新增</span>
+</div>
+<div class="mx-toolbar">
+	<a href="javascript:;" class="button" brurl="sys/tagman/?app.html"><span class="mx-sysmenu-tree"></span></a>
+</div>
+<div class="mx-formpanel">
+	<form class="ajaxform" method="post" action="sys/tagman/do/?Data-add.html">
+	  <fieldset style="width:500px;">
+	  <legend>新增标签</legend>
+	  <table border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="500">
+		    <label>标签名</label>
+			<input type="text" name="tagname" dataType="EngNumDl" itip="标签名只能填写英文下划线或者数字" />
+		  </td>
+		</tr>
+		<tr>
+          <td width="500">
+		  	<label>标签内容</label>
+			<textarea name="tagcontent" dataType="Require" itip="请填写标签内容"></textarea>
+		  </td>
+        </tr>
+		<tr>
+          <td width="300" class="mx-form-submit" colspan="2">
+		    <input type="submit" name="submitButton" value="提　交" />
+		  </td>
+        </tr>
+      </table>
+	  </fieldset>
+	</form>
+</div>

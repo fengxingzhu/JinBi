@@ -1,0 +1,83 @@
+<%import class="Menu" method="getlist,readpmenu"%>
+<style type="text/css">
+.mx-downmenu { display:block; width:65px; float:left; background:url(images/edit.gif) no-repeat center left; text-indent:16px; margin:0 5px; }
+.mx-toolbar .mx-toolbarright { float:left; }
+</style>
+<table id="Menu-grid">
+  <thead>
+	<tr>
+		<th width="20"><input type="checkbox" name="allselect" class="gridcheck"/></th>
+		<th width="26">ID</th>
+		<th width="80">序号</th>
+		<th width="300">标题</th>
+		<th width="80">栏目类型</th>
+		<th width="80">子栏目数</th>
+		<th width="260">操作</th>
+	</tr>
+</thead>
+   <tbody>
+		<%loop from="data" item="list"%>
+		<tr>
+			<td><input type="checkbox" name="checks" value="<%$list.id%>" class="gridcheck" /></td>
+			<td><%$list.id%></td>
+			<td><input type="text" name="handsort" mid="<%$list.id%>" value="<%$list.sort%>" style="width:60px;" class="gridcheck" /></td>
+			<td><%$list.title%></td>
+			<td><span class="mx-mapping" key="menu_typedata"><%$list.typeid%></span></td>
+			<td><a href="javascript:;" brurl="sys/column/?app/pid/<%$list.id%>.html"><%$list.sonum%></a></td>
+			<td><a href="javascript:;" brurl="sys/column/?app/pid/<%$list.id%>.html" class="mx-downmenu">下级栏目</a><a href="javascript:;" brurl="sys/column/?add/pid/<%$list.id%>.html" class="mx-list-add">新增</a><a href="javascript:;" brurl="sys/column/?edit/pid/<%$list.parent_id%>/id/<%$list.id%>.html" class="mx-list-edit">修改</a><a href="javascript:;" class="mx-list-remove" delid="<%$list.id%>" delname="<%$list.title%>" delurl="sys/column/do/?Menu-del" backurl="sys/column/?app/pid/<%$list.parent_id%>.html">删除</a></td>
+		</tr>
+		<%/loop%>
+</tbody>
+</table>
+<script type="text/javascript">
+$(function(){
+	$('#Menu-grid').flexigrid({
+		title:'<span class="mx-sysmenu"></span>：<%$TITLE_GUID%>',
+		height:'auto',
+		showToggleBtn:false,
+		resizable:false,
+		defcheckbox:true,
+		buttons : [
+			{
+				name:'新增',
+				bclass:'mx-add',
+				onpress:function(){
+					var url = "sys/column/?add/pid/<%$PARENT_ID%>/sort/<%$SORTVAL%>.html";
+					tabtreecontent(url);
+					$.mx.setparam('url',url);
+				}
+			},
+			{
+				separator: true
+			},
+			{
+				name: '删除',
+				bclass: 'mx-delete',
+				onpress : moredelete({
+					tb:'#Menu-grid',
+					post:{},
+					url:"sys/column/do/?Menu-delmore",
+					flurl:"sys/column/?app/pid/<%$PARENT_ID%>.html"
+				})
+			},
+			{
+				separator: true
+			},
+			{
+				name: '手动排序',
+				bclass: 'mx-handsort',
+				onpress : handsort({
+					tb:'#Menu-grid',
+					post:{
+						dbname:'{DB_MX_PRE}menu',
+						sortfd:'sort'
+					},
+					url:"do/?Common-handsort",
+					flurl:"sys/column/?app/pid/<%$PARENT_ID%>.html"
+				})
+			}
+		]
+	});
+});
+addmapping('menu_typedata',['系统栏目','网站导航','网站管理']);
+</script>

@@ -1,0 +1,29 @@
+<div class="ui-state-default left-tree-top" style="margin-right:0;">
+	<span><span class="mx-sysmenu"></span> > 测试</span>
+</div>
+<div class="mx-toolbar">
+	<a href="javascript:;" class="button" brurl="sys/picknode/?app.html"><span class="mx-sysmenu-tree"></span></a>
+</div>
+<%import class="Data" method="testpnode"%>
+<div class="mx-formpanel">
+	<form class="ajaxform">
+	  <fieldset style="width:700px;">
+	  <textarea name="formDataInfo" class="mx-formdata"><%$data%></textarea>
+	  <legend>结点测试结果</legend>
+	  <table border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="700">
+		    <label>状态</label>
+			<div><%$nodeinfo%></div>
+		  </td>
+        </tr>
+		<tr>
+          <td width="700">
+		    <label>结果</label>
+			<textarea name="result" style="height:200px;"><%$nodeareainfo%></textarea>
+		  </td>
+        </tr>
+      </table>
+	  </fieldset>
+	</form>
+</div>

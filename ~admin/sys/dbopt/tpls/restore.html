@@ -1,0 +1,42 @@
+<%import class="Data" method="getbakfile"%>
+<div class="ui-state-default left-tree-top" style="margin-right:0;">
+	<span class="mx-sysmenu"></span>
+</div>
+<form enctype="multipart/form-data" id="sys-dbopt-backinfo" action="sys/dbopt/do/?Data-backrestore.html" method="post" onsubmit="return false;">
+<table width="91%" border="0" align="center" cellpadding="0" cellspacing="0">
+	<tr align="center">
+		<td height="30" colspan="2" align="center"><b style="font-size:14px;">数据恢复</b></td>
+	</tr>
+	<tr>
+	  <td width="14%" height="30">选择服务器备份文件 </td>
+		<td height="30"><select name="serverfile">
+										<option value="">-请选择-</option>
+										<%loop from="bakdata" item="list"%>
+										<option value="<%$list%>"><%$list%></option>
+										<%/loop%>
+									</select>
+		  <input type="submit" name="act" id="sys-dbopt-backsubmit" value="恢复数据" /></td>
+    </tr>
+</table>
+</form>
+<script type="text/javascript">
+$(function(){
+	$("#sys-dbopt-backsubmit").click(function(){
+		mxmask("正在恢复数据...");
+		$("#sys-dbopt-backinfo").ajaxSubmit({
+			success:function(responseText, statusText, xhr, $form){
+				if(responseText!=""){
+					var ores = encode(responseText);
+					switch(ores.type){
+						case "msg": Tip({title:ores.title?ores.title:"提示",content:ores.msg}); break;
+						case "ajaxcontent": tabtreecontent(ores.url); break;
+						case "tab": tabmenuurl(ores.url); break;
+						case "jump": document.location = ores.url; break;
+					}
+				}
+				$("#mx-submitting").hide();
+			}
+		});
+	});
+});
+</script>

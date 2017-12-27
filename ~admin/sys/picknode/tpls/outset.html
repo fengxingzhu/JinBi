@@ -1,0 +1,159 @@
+<style type="text/css">
+.typeidselect {
+	margin:0;
+	padding:0;
+}
+.typeidselect li {
+	list-style:none;
+	float:left;
+	width:50%;
+	height:20px; line-height:20px;
+}
+.typeidselect li span,.typeidselect li input {
+	float:left;
+}
+</style>
+<%import class="Data" method="getsetoutinfo,getlivtypes"%>
+<div class="ui-state-default left-tree-top" style="margin-right:0;">
+	<span><span class="mx-sysmenu"></span> > <%$info.name%> > 导出设置</span>
+</div>
+<div class="mx-toolbar">
+	<a href="javascript:;" class="button" brurl="sys/picknode/?app.html"><span class="mx-sysmenu-tree"></span></a>
+</div>
+<div class="mx-formpanel">
+	<form id="pickform___typeid" class="ajaxform" method="post" action="sys/picknode/do/?Data-outsave/fieldname/__typeid/nodeid/<%$info.id%>.html" style="margin-top:5px;">
+		<fieldset style="width:500px;">
+		<legend>导入到以下栏目</legend>
+		<ul class="typeidselect">
+			<%loop from="typeidarr" item="vfd"%>
+			<li><input name="__typeidtemp" type="checkbox" value="<%$vfd.typeid%>" /><span><%$vfd.name%></span></li>
+			<%/loop%>
+		</ul>
+		<div style="clear:both;"></div>
+		  <table border="0" cellspacing="0" cellpadding="0">
+			<tr>
+			  <td width="500"><input type="hidden" name="start_tag" id="__typeid_arr" /><input type="hidden" name="istype" value="1" /><input type="submit" value="保存设置" /><span onclick="picknodedel('sys/picknode/do/?Data-outsetdel/fieldname/__typeid/nodeid/<%$info.id%>.html','导入的栏目','__typeid')" style="margin-left:10px; cursor:pointer;">删除设置</span></td>
+			</tr>
+		  </table>
+		</fieldset>
+	</form>
+	<%loop from="fieldlist" item="list"%>
+	<form id="pickform_<%$list.name%>" class="ajaxform" method="post" action="sys/picknode/do/?Data-outsave/fieldname/<%$list.name%>/nodeid/<%$info.id%>.html" style="margin-top:5px;">
+		<fieldset style="width:500px;">
+		<legend><%$list.fieldlabel%></legend>
+		  <div>
+		  	<div style="float:left;width:140px;">
+				采集方式
+				<select name="fdpickype" fd="<%$list.id%>">
+					<option value="0">DOM匹配</option>
+					<option value="1">字符匹配</option>
+				  </select>
+			</div>
+			<div style="margin-left:20px;float:left;width:340px;display:<% echo empty($VAL['list']['fdpickype'])?'block':'none'; %>;" id="fddomfind_<%$list.id%>">查找DOM元素 <input type="text" name="fddomfind" /></div>
+		  </div>
+		  <div style="clear:both;"></div>
+		  <table border="0" cellspacing="0" cellpadding="0">
+				<tbody id="textmatch_<%$list.id%>" style="display:<% echo empty($VAL['list']['fdpickype'])?'none':'block'; %>;">
+					<tr>
+					  <td width="78" align="right">开始HTML</td>
+					  <td width="183"><input type="text" name="start_tag" style="width:179px;" /><input type="hidden" name="istype" value="0" /><input type="hidden" name="fdsucname" value="<%$list.fieldlabel%>" /></td>
+					  <td width="56">结束HTML</td>
+					  <td width="181"><input type="text" name="end_tag" style="width:179px;" /></td>
+					</tr>
+					<tr>
+					  <td width="78" align="right">去除空白</td>
+					  <td width="183"><input name="cuttrim" type="checkbox" value="1" /></td>
+					  <td width="56">去除HTML</td>
+					  <td width="181"><input name="cuthtml" type="checkbox" value="1" /></td>
+					</tr>
+					<tr>
+					  <td width="78" align="center">将字符</td>
+					  <td width="183"><input name="replace_oldstr" type="text" value="" style="width:179px;"/></td>
+					  <td width="56">替换为</td>
+					  <td width="181"><input name="replace_newstr" type="text" value="" style="width:179px;"/></td>
+					</tr>
+				</tbody>
+				<tr>
+				  <td colspan="4"><input type="submit" value="保存设置" /><span onclick="picknodedel('sys/picknode/do/?Data-outsetdel/fieldname/<%$list.name%>/nodeid/<%$info.id%>.html','<%$list.fieldlabel%>','<%$list.name%>')" style="margin-left:10px; cursor:pointer;">删除设置</span></td>
+				</tr>
+		  </table>
+		</fieldset>
+	</form>
+	<%/loop%>
+</div>
+<script type="text/javascript">
+//删除设置
+function picknodedel(url,fd,n)
+{
+	dialog({
+		title:'提示',
+		content:'确定删除《'+fd+'》吗?,如果确定,删除后将不能恢复!',
+		resizable:false,
+		bgiframe:false,
+		buttons:{
+			'是': function(){
+				var me = this;
+				$.get(url,function(){
+					$('#pickform_'+n)[0].reset();
+					$(me).dialog('destroy');
+					$('input[name="__typeidtemp"]').each(function(){
+						$(this).attr('checked',false);
+					});
+					Tip({title:"删除提示",content:'['+fd+']删除成功!'});
+				});
+			},
+			'否': function() {
+				$(this).dialog('destroy');
+			}
+		}
+	});
+}
+$(function(){
+	var data = <%$datainfo%>,
+		datalen = data.length;
+	for(var i=0;i<datalen;i++){
+		var dd = data[i],
+			_fieldname = data[i]['fieldname'],
+			_form = $('#pickform_'+_fieldname)[0];
+		//text field
+		$('[type="text"][type!="hidden"],select',_form).each(function(i,o){
+			$(o).val(dd[$(o).attr('name')]);
+		});
+		//checkbox field
+		$('[type="checkbox"]',_form).each(function(i,o){
+			var n = $(o).attr("name"),
+				val = dd[$(o).attr('name')],
+				nlv = $(o).val();
+			$(o).attr("checked",$.inArray(val,nlv)>-1?true:false);
+		});
+		//typeid
+		if(_fieldname=='__typeid' && dd['start_tag']!=''){
+			var etype = dd['start_tag'].split('|'),
+				etylen = etype.length;
+			for(var k=0;k<etylen;k++){
+				$('input[name="__typeidtemp"][value="'+etype[k]+'"]').attr('checked','checked');
+			}
+		}
+	}
+	//选择采集方式
+	$('select[name="fdpickype"]').change(function(){
+		var fid = $(this).attr('fd');
+		if($(this).val()==0){
+			$('#fddomfind_'+fid).show();
+			$('#textmatch_'+fid).hide();
+		}else{
+			$('#fddomfind_'+fid).hide();
+			$('#textmatch_'+fid).show();
+		}
+	});
+	//导入栏目
+	$('input[name="__typeidtemp"]').click(function(){
+		var val = [];
+		$('input[name="__typeidtemp"]:checked').each(function(){
+			val.push($(this).val());
+		});
+		var res = val.join('|');
+		$('#__typeid_arr').val(res);
+	});
+});
+</script>

@@ -1,0 +1,29 @@
+<div class="ui-state-default left-tree-top" style="margin-right:0;">
+	<span class="mx-sysmenu"></span> > 模板管理
+</div>
+<table id="Detpl-grid">
+  <thead>
+	<tr>
+		<th width="400">模板文件</th>
+		<th width="100">操作</th>
+	</tr>
+</thead>
+   <tbody>
+		<%loop class="Detpl" method="getpls"%>
+		<tr>
+			<td><%$list.file%></td>
+			<td><a href="javascript:;" class="mx-list-edit" brurl="sys/detpl/?code/id/<% echo $_GET['id'] %>/mdtpl/<% echo $_GET['mdtpl']; %>/file/<%$list.file%>">查看</a></td>
+		</tr>
+		<%/loop%>
+</tbody>
+</table>
+<script type="text/javascript">
+$(function(){
+	$('#Detpl-grid').flexigrid({
+		title:'模板管理',
+		height:'auto',
+		showToggleBtn:false,
+		resizable:false
+	});
+});
+</script>

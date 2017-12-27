@@ -1,0 +1,129 @@
+<div class="ui-state-default left-tree-top" style="margin-right:0;">
+	<span><span class="mx-sysmenu"></span> > 修改</span>
+</div>
+<div class="mx-toolbar">
+	<a href="javascript:;" class="button" brurl="sys/picknode/?app.html"><span class="mx-sysmenu-tree"></span></a>
+</div>
+<%import class="Data" method="getnode,getlivs"%>
+<div class="mx-formpanel">
+	<form class="ajaxform" method="post" action="sys/picknode/do/?Data-edit/id/<%$info.id%>.html">
+	  <fieldset style="width:500px;">
+	  <textarea name="formDataInfo" class="mx-formdata"><%$data%></textarea>
+	  <legend>修改结点</legend>
+	  <table border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="500">
+		    <label>结点名称</label>
+			<input type="text" name="name" dataType="Require" itip="请填写结点名称" />
+		  </td>
+        </tr>
+		<tr>
+          <td width="500">
+		    <label>来源网址(批量通配符为"(*)")</label>
+			<input type="text" name="website" dataType="Require" itip="请填写来源网址" />
+		  </td>
+        </tr>
+		<tr>
+          <td width="500">
+		    <label>批量通配的范围</label>
+			<div>从<input name="page_start" type="text" size="3" value="" class="noauto"  />到<input name="page_end" type="text" size="3" value="" class="noauto" /></div>
+		  </td>
+        </tr>
+		<tr>
+          <td width="500">
+		    <label>目标页面编码</label>
+			<select name="codetype" dataType="Require" itip="请选择目标页面编码">
+            	<option value="GB2312">GB2312</option>
+				<option value="GBK">GBK</option>
+            	<option value="UTF8">UTF8</option>
+          	</select>
+		  </td>
+        </tr>
+		<tr>
+          <td width="500">
+		    <label>采集方式</label>
+			<select name="picktype" dataType="Require" itip="请选择采集方式">
+            	<option value="0">DOM匹配</option>
+				<option value="1">字符匹配</option>
+          	</select>
+		  </td>
+        </tr>
+		<tr id="picktype_domfind" style="display:block;">
+          <td width="500">
+		    <label>查找DOM元素</label>
+			<input type="text" name="domfind" />
+		  </td>
+        </tr>
+		<tr id="picktype_areastart" style="display:none;">
+          <td width="500">
+		    <label>列表开始匹配HTML</label>
+			<textarea name="area_start" cols="45" rows="2"></textarea>
+		  </td>
+        </tr>
+		<tr id="picktype_areaend" style="display:none;">
+          <td width="500">
+		    <label>列表结束匹配HTML</label>
+			<textarea name="area_end" cols="45" rows="2"></textarea>
+		  </td>
+        </tr>
+		<tr>
+          <td width="500">
+		    <label>资源下载超时时间</label>
+			<input name="timeout" type="text" size="3" dataType="Require" itip="请填写资源下载超时时间" value="10" />
+		  </td>
+        </tr>
+		<tr>
+          <td width="500">
+		    <label>内容实例选择</label>
+			<select name="livid">
+				<option value="">请选择内容实例</option>
+				<%loop from="livs" item="list"%>
+				<option value="<%$list.id%>"><%$list.livname%>[<%$list.dbtname%>]</option>
+				<%/loop%>
+		  	</select>
+		  </td>
+        </tr>
+        
+        
+        <tr>
+          <td width="500">
+		    <label>网站域名（如果网站列表链接不是绝对路径，请在这里填写域名）</label>
+			<input type="text" name="weblinks" />
+		  </td>
+        </tr>
+		<tr>
+        
+        
+		<tr>
+          <td width="300" class="mx-form-submit">
+		    <input type="submit" name="submitButton" value="提　交" />
+		  </td>
+        </tr>
+      </table>
+	  </fieldset>
+	</form>
+</div>
+<script type="text/javascript">
+$(function(){
+	$('select[name="picktype"]').change(function(){
+		if($(this).val()==0){
+			$('#picktype_domfind').show();
+			$('#picktype_areastart').hide();
+			$('#picktype_areaend').hide();
+		}else{
+			$('#picktype_domfind').hide();
+			$('#picktype_areastart').show();
+			$('#picktype_areaend').show();
+		}
+	});
+	if('<%$info.picktype%>'=='0'){//DOM
+		$('#picktype_domfind').show();
+		$('#picktype_areastart').hide();
+		$('#picktype_areaend').hide();
+	}else{
+		$('#picktype_domfind').hide();
+		$('#picktype_areastart').show();
+		$('#picktype_areaend').show();
+	}
+});
+</script>

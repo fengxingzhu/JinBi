@@ -1,0 +1,79 @@
+<%import class="Data" method="getlist"%>
+<table id="picknode-grid">
+	<thead>
+		<tr>
+			<th width="20"><input type="checkbox" name="allselect" class="gridcheck" /></th>
+			<th width="26">ID</td>
+			<th width="160">节点名称</th>
+			<th width="180">来源网址</th>
+			<th width="80">编码</th>
+			<th width="80">采集方式</th>
+			<th width="120">添加时间</th>
+			<th width="280">操作</th>
+		</tr>
+	</thead>
+	<tbody>
+		<%loop from="data" item="list"%>
+		<tr>
+			<td><input type="checkbox" name="checks" value="<%$list.id%>" class="gridcheck" /></td>
+			<td><%$list.id%></td>
+			<td><%$list.name%></td>
+			<td><%$list.website%></td>
+			<td><%$list.codetype%></td>
+			<td><% echo $VAL['list']['picktype']==0?'DOM匹配':'字符匹配'; %></td>
+			<td><%$list.cdate%></td>
+			<td><a href="javascript:;" brurl="sys/picknode/?test/id/<%$list.id%>.html" class="mx-list-test">测试</a><a href="javascript:;" brurl="sys/picknode/?outset/id/<%$list.id%>.html" class="mx-list-pickout">导出设置</a><a href="javascript:;" onclick="pickdatainfo('sys/picknode/do/?Data-pickdata/id/<%$list.id%>.html',{id:<%$list.id%>,title:'<%$list.name%>',page_start:<%$list.page_start%>,page_end:<%$list.page_end%>})" class="mx-list-pickdata">采集</a><a href="javascript:;" brurl="sys/picknode/?edit/id/<%$list.id%>.html" class="mx-list-edit">修改</a><a href="javascript:;" class="mx-list-remove" delid="<%$list.id%>" delname="<%$list.name%>" delurl="sys/picknode/do/?Data-del" backurl="sys/picknode/?app.html">删除</a></td>
+		</tr>
+		<%/loop%>
+	</tbody>
+</table>
+<script type="text/javascript">
+$(function(){
+	$('#picknode-grid').flexigrid({
+		title:'<span class="mx-sysmenu"></span>',
+		height:'auto',
+		showToggleBtn:false,
+		resizable:false,
+		defcheckbox:true,
+		buttons : [
+			{
+				name:'新增',
+				bclass:'mx-add',
+				onpress:function(){
+					var url = "sys/picknode/?add.html";
+					tabtreecontent(url);
+					$.mx.setparam('url',url);
+				}
+			},
+			{
+				separator: true
+			},
+			{
+				name: '删除',
+				bclass: 'mx-delete',
+				onpress : moredelete({
+					tb:'#picknode-grid',
+					post:{},
+					url:"sys/picknode/do/?Data-del",
+					flurl:"sys/picknode/?app.html"
+				})
+			}
+		]
+	});
+});
+//采集
+function pickdatainfo(url,c)
+{
+	mxmask("正在采集...");
+	$.post(url,c,function(d){
+		if(d!=''){
+			mxmask("正在采集[第"+d+"页]...");
+			c.curpn = d;
+			pickdatainfo("sys/picknode/do/?Data-pickmore/id/"+c.id+".html",c);
+		}else{
+			$("#mx-submitting").hide();
+			Tip({title:'采集提示:',content:'采集完成!'});
+		}
+	});
+}
+</script>

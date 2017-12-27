@@ -1,0 +1,99 @@
+<%import class="Upfileman" method="getlist,upfilemax"%>
+<table id="Upfileman-grid">
+	<thead>
+		<tr>
+			<th width="80">排序</th>
+			<th width="150">文件分类名</td>
+			<th width="300">充许的后缀名</th>
+			<th width="180">操作</th>
+		</tr>
+	</thead>
+	<tbody>
+		<%loop from="filterslist" item="list"%>
+		<tr>
+			<td><input type="text" name="handsort" mid="<%$list.id%>" value="<%$list.sort%>" style="width:60px;" class="gridcheck" /></td>
+			<td><%$list.ftype%></td>
+			<td><%$list.exts%></td>
+			<td><a href="javascript:;" brurl="sys/upfileman/?edit/id/<%$list.id%>.html" class="mx-list-edit">修改</a><a href="javascript:;" class="mx-list-remove" delid="<%$list.id%>" delname="<%$list.ftype%>" delurl="sys/upfileman/do/?Upfileman-del" backurl="sys/upfileman/?app.html">删除</a></td>
+		</tr>
+		<%/loop%>
+	</tbody>
+</table>
+<div id="sys-upfilemaxsize" title="最大文件大小" style="display:none;">
+	<form id="sys-upfilemaxsize-form" method="post" action="sys/upfileman/do/?Upfileman-editmaxsize.html">
+		<label>最大文件大小(单位:mb)</label>
+		<input type="text" name="size" value="<%$maxsizeinfo%>" class="text ui-widget-content ui-corner-all" dataType="Number" itip="最大文件大小必须0的整数" />
+	</form>
+</div>
+<script type="text/javascript">
+$(function(){
+	$('#Upfileman-grid').flexigrid({
+		title:'<span class="mx-sysmenu"></span>',
+		height:'auto',
+		showToggleBtn:false,
+		resizable:false,
+		buttons : [
+			{
+				name:'新增',
+				bclass:'mx-add',
+				onpress:function(){
+					var url = "sys/upfileman/?add.html";
+					tabtreecontent(url);
+					$.mx.setparam('url',url);
+				}
+			},
+			{
+				separator: true
+			},
+			{
+				name:'最大文件大小',
+				bclass:'mx-add',
+				onpress:function(){
+					dialog({
+						id:'sys-upfilemaxsize',
+						resizable:false,
+						bgiframe:false,
+						buttons: {
+							'提　交':function(){
+								var me = this;
+								$("#sys-upfilemaxsize-form").ajaxSubmit({
+									beforeSubmit:$.mx.validator,
+									success:function(responseText, statusText, xhr, $form){
+										if(responseText==""){
+											$("#mx-submitting").hide();
+											$(me).dialog('destroy');
+											Tip({title:"提示",content:'修改成功,刷新后生效!'});
+										}else{
+											$("#mx-submitting").hide();
+											Tip({title:"提示",content:responseText});
+										}
+									}
+								});
+							},
+							'关　闭': function() {
+								$(this).dialog('destroy');
+							}
+						}
+					});
+				}
+			},
+			{
+				separator: true
+			},
+			{
+				name: '手动排序',
+				bclass: 'mx-handsort',
+				onpress : handsort({
+					tb:'#Upfileman-grid',
+					post:{
+						dbname:'{DB_MX_PRE}filters',
+						sortfd:'sort'
+					},
+					url:"do/?Common-handsort",
+					flurl:"sys/upfileman/?app.html"
+				})
+			}
+		]
+	});
+});
+</script>

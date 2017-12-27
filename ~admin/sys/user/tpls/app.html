@@ -1,0 +1,88 @@
+<script type="text/javascript">
+//重置密码
+function usereditpw(id,name)
+{
+	dialog({
+		title:'提示',
+		content:'确定重置用户《'+name+'》的密码吗?',
+		resizable:false,
+		bgiframe:false,
+		buttons:{
+			'是': function(){
+				var me = this;
+				$.get("sys/user/do/?User-editpw/id/"+id+".html",function(){
+					Tip({title:'用户重置提示:',content:'《'+name+'》密码重置成功!'});
+					tabtreecontent("sys/user/?app.html",function(){
+						$(me).dialog('destroy');
+					});
+				});
+			},
+			'否': function() {
+				$(this).dialog('destroy');
+			}
+		}
+	});
+}
+$(function(){
+	$('#User-grid').flexigrid({
+		title:'<span class="mx-sysmenu"></span>',
+		height:'auto',
+		showToggleBtn:false,
+		resizable:false,
+		defcheckbox:true,
+		buttons : [
+			{
+				name:'新增',
+				bclass:'mx-add',
+				onpress:function(){
+					var url = "sys/user/?add.html";
+					tabtreecontent(url);
+					$.mx.setparam('url',url);
+				}
+			},
+			{
+				separator: true
+			},
+			{
+				name: '删除',
+				bclass: 'mx-delete',
+				onpress : moredelete({
+					tb:'#User-grid',
+					post:{},
+					url:"sys/user/do/?User-del",
+					flurl:"sys/user/?app.html"
+				})
+			}
+		]
+	});
+});
+</script>
+<%import class="User" method="getlist"%>
+<table id="User-grid">
+	<thead>
+		<tr>
+			<th width="20"><input type="checkbox" name="allselect" class="gridcheck" /></th>
+			<th width="26">ID</td>
+			<th width="100">用户名</th>
+			<th width="80">姓名</th>
+			<th width="120">Email</th>
+			<th width="120">角色</th>
+			<th width="150">新增时间</th>
+			<th width="180">操作</th>
+		</tr>
+	</thead>
+	<tbody>
+		<%loop from="data" item="list"%>
+		<tr>
+			<td><input type="checkbox" name="checks" value="<%$list.id%>" class="gridcheck" /></td>
+			<td><%$list.id%></td>
+			<td><%$list.username%></td>
+			<td><%$list.name%></td>
+			<td><%$list.email%></td>
+			<td><%$list.title%></td>
+			<td><%$list.cdate%></td>
+			<td><a href="javascript:;" onclick="usereditpw(<%$list.id%>,'<%$list.name%>')" class="mx-list-edit" style="width:70px;">重置密码</a><a href="javascript:;" brurl="sys/user/?edit/id/<%$list.id%>.html" class="mx-list-edit">修改</a><a href="javascript:;" class="mx-list-remove" delid="<%$list.id%>" delname="<%$list.name%>" delurl="sys/user/do/?User-del" backurl="sys/user/?app.html">删除</a></td>
+		</tr>
+		<%/loop%>
+	</tbody>
+</table>

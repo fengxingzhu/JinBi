@@ -1,0 +1,205 @@
+<%import class="Data" method="getnodelist,getsearchinfo"%>
+<style type="text/css">
+#pickcnt-search { margin:10px; }
+</style>
+<div class="ui-state-default left-tree-top" style="margin-right:0;">
+	<span class="mx-sysmenu"></span>
+</div>
+<div id="pickcnt-search">
+	<form class="ajaxform" action="sys/pickcnt/do/?Data-search.html" method="post">
+		<textarea name="formDataInfo" class="mx-formdata"><%$searchdata%></textarea>
+		<div>
+			<span>
+				<label>关键词(分隔符为空格):</label>
+				<input type="text" style="width:100px;" name="keyword">
+			</span>
+			<span>
+				<label>结点:</label>
+				<select name="nodeid" id="sys-pickcnt-nodes">
+					<option value="">请选择结点</option>
+					<%loop from="NODELIST" item="list"%>
+					<option value="<%$list.id%>"><%$list.name%></option>
+					<%/loop%>
+				</select>
+			</span>
+			<span>
+				<label>导入栏目:</label>
+				<select name="typeid" id="sys-pickcnt-typeid">
+					<option value="">请选择栏目信息</option>
+					<%loop from="TYPETAGS" item="list"%>
+					<option value="<%$list.tid%>"><%$list.title%></option>
+					<%/loop%>
+				</select>
+			</span>
+			<span><input type="submit" value="查询" name="submitButton"></span>
+			<span><a id="sys-pickcnt-clearsearch" style="text-decoration:underline;" href="javascript:;">清空条件</a></span>
+		</div>
+	</form>
+</div>
+<table id="pickcnt-grid"></table>
+<script type="text/javascript">
+$(function(){
+	$('#pickcnt-grid').flexigrid({
+		url:'sys/pickcnt/do/?Data-glist/',
+		dataType:'json',
+		height:'auto',
+		colModel:[
+			{
+				display :"ID",
+				name:"id",
+				width:40,
+				sortable:true,
+				align:"center"
+			},
+			{
+				display :"节点名称",
+				name:"name",
+				width:200,
+				sortable:true,
+				align:"left"
+			},
+			{
+				display :"文章标题",
+				name:"title",
+				width:420,
+				sortable:true,
+				align:"left"
+			},
+			{
+				display :"采集时间",
+				name:"cdate",
+				width:140,
+				sortable:true,
+				align:"center"
+			},
+			{
+				display :"查看",
+				name:"view",
+				width:60,
+				sortable:true,
+				align:"center"
+			}
+		],
+		usepager:true,
+		rp:20,
+		checkbox:true,
+		showToggleBtn:false,
+		resizable:false,
+		onToggleCol:true,
+		buttons : [
+			{
+				name: '导入全部',
+				bclass: 'mx-add',
+				onpress : function(){
+					mxmask("正在导入...");
+					pickcntallimport(0,0);//开始导入
+				}
+			},
+			{
+				name: '导入选中',
+				bclass: 'mx-add',
+				onpress : function(){
+					var ids = [];
+					$('#pickcnt-grid input[type="checkbox"][class="noborder"]').each(function(i,o){
+						var _val = $(o).val();
+						_val = _val.substr(3,_val.length);
+						$(o).attr("checked")?ids.push(_val):"";
+					});
+					var _ids = ids.join(",");
+					if(_ids==""){
+						Tip({title:'导入提示:',content:'请选择要导入列表项'});
+					}else{
+						mxmask("正在导入...");
+						$.post('sys/pickcnt/do/?Data-imports/',{ids:_ids},function(text){
+							$("#mx-submitting").hide();
+							Tip({title:'导入提示:',content:'导入成功!'});
+							tabtreecontent('sys/pickcnt/?app.html');
+						});
+					}
+				}
+			},
+			{
+				name: '删除选中',
+				bclass: 'mx-delete',
+				onpress : function(){
+					var ids = [];
+					$('#pickcnt-grid input[type="checkbox"][class="noborder"]').each(function(i,o){
+						var _val = $(o).val();
+						_val = _val.substr(3,_val.length);
+						$(o).attr("checked")?ids.push(_val):"";
+					});
+					var _ids = ids.join(",");
+					if(_ids==""){
+						Tip({title:'删除提示:',content:'请选择要删除列表项'});
+					}else{
+						mxmask("正在删除选中...");
+						$.post('sys/pickcnt/do/?Data-delcontent/',{ids:_ids},function(text){
+							$("#mx-submitting").hide();
+							Tip({title:'删除提示:',content:'删除成功!'});
+							tabtreecontent('sys/pickcnt/?app.html');
+						});
+					}
+				}
+			},
+			{
+				name: '删除已导入',
+				bclass: 'mx-delete',
+				onpress : function(){
+					mxmask("正在删除已导入...");
+					$.get('sys/pickcnt/do/?Data-delimported/',function(text){
+						$("#mx-submitting").hide();
+						Tip({title:'删除提示:',content:'删除成功!'});
+						tabtreecontent('sys/pickcnt/?app.html');
+					});
+				}
+			},
+			{
+				name: '清空',
+				bclass: 'mx-delete',
+				onpress : function(){
+					mxmask("正在清空...");
+					$.get('sys/pickcnt/do/?Data-clearempty/',function(text){
+						$("#mx-submitting").hide();
+						Tip({title:'删除提示:',content:'删除成功!'});
+						tabtreecontent('sys/pickcnt/?app.html');
+					});
+				}
+			}
+		]
+	});
+	//选择结点
+	$('#sys-pickcnt-nodes').change(function(){
+		var nodeid = $("#sys-pickcnt-nodes").val();
+		$.post("sys/pickcnt/do/?Data-getypeinfo.html",{nodeid:nodeid},function(text){
+			var d = encode(text),
+				dlen = d.length,
+				omsel = document.getElementById("sys-pickcnt-typeid");
+			omsel.options.length = 0;
+			omsel.options[0] = new Option("请选择栏目信息","");
+			for(var i=0;i<dlen;i++){
+				omsel.options[i+1] = new Option(d[i]['title'],d[i]['tid']);
+			}
+		});
+	});
+	//清空搜索条件
+	$('#sys-pickcnt-clearsearch').click(function(){
+		$.get('sys/pickcnt/do/?Data-clearsearch.html',function(){
+			tabtreecontent("sys/pickcnt/?app.html");
+		});
+	});
+});
+//导入全部
+function pickcntallimport(ids,lastid)
+{
+	$.post('sys/pickcnt/do/?Data-importall/',{ids:ids,lastid:lastid},function(text){
+		var ores = eval('('+text+')');
+		if(ores.finsh==1){//导入完成
+			$("#mx-submitting").hide();
+			Tip({title:'导入提示:',content:'导入成功!'});
+			tabtreecontent('sys/pickcnt/?app.html');
+		}else{
+			pickcntallimport(ores.ids,ores.lastid);
+		}
+	});
+}
+</script>

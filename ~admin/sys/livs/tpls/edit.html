@@ -1,0 +1,78 @@
+<%import class="Livs" method="getsimlives,getcompents"%>
+<div class="ui-state-default left-tree-top" style="margin-right:0;">
+	<span><span class="mx-sysmenu"></span> > <%$info.livname%> > 修改</span>
+</div>
+<div class="mx-toolbar">
+	<a href="javascript:;" class="button" brurl="sys/livs/?app.html"><span class="mx-sysmenu-tree"></span></a>
+</div>
+<div class="mx-formpanel">
+	<form class="ajaxform" method="post" action="sys/livs/do/?Livs-edit/id/<%$info.id%>.html">
+	  <fieldset style="width:300px;">
+	  <legend>修改</legend>
+	  <textarea name="formDataInfo" class="mx-formdata"><%$data%></textarea>
+	  <table border="0" cellspacing="0" cellpadding="0">
+		<tr>
+          <td width="300">
+		    <label>选择类型</label>
+			<select name="dir" dataType="Require" itip="请选择类型" onchange="__compentselect(this)">
+				<option value="" apiurl="" apiname="">选择类型</option>
+				<%loop from="cmptdata" item="cmpt"%>
+					<option value="<%$cmpt.dir%>" apiurl="<%$cmpt.apiurl%>" apiname="<%$cmpt.name%>"><%$cmpt.name%>(<%$cmpt.dir%>)</option>
+				<%/loop%>
+			</select>
+			<input id="sys_livs_apiurl" name="apiurl" type="hidden" value="<%$info.apiurl%>" />
+			<input id="sys_livs_appname" name="appname" type="hidden" value="<%$info.appname%>" />
+		  </td>
+        </tr>
+		<tr>
+          <td width="300">
+		    <label>实例分类</label>
+			<select name="gid"  dataType="Require" itip="请选择实例分类">
+				<%loop class="Apgs" method="getgroups" path="../apgs"%>
+					<option value="<%$list.id%>"><%$list.gname%>(<%$list.gdir%>)</option>
+				<%/loop%>
+			</select>
+		  </td>
+        </tr>
+		<tr>
+          <td width="300">
+		    <label>信息审核</label>
+			<select name="syngrade">
+				<option value="0">不需要审核</option>
+				<option value="1">一级审核 </option>
+				<option value="2">二级审核 </option>
+				<option value="3">三级审核 </option>
+				<option value="4">四级审核 </option>
+			</select>
+		  </td>
+        </tr>
+		<tr>
+          <td width="300">
+		    <label>实例中文名称</label>
+			<input type="text" name="livname" dataType="Require" itip="请填写实例中文名称" />
+		  </td>
+        </tr>
+		<tr>
+          <td width="300">
+		    <label>实例名称</label>
+			<input type="text" name="proname" dataType="EngNumDl" itip="实例名称只能为英文,数字或者下划线" />
+		  </td>
+        </tr>
+		<tr>
+          <td width="500" class="mx-form-submit">
+		    <input type="submit" name="submitButton" value="提　交" />
+		  </td>
+        </tr>
+      </table>
+	  </fieldset>
+	</form>
+</div>
+<script type="text/javascript">
+//组件选择
+function __compentselect(t)
+{
+	var o = $(':selected',t);
+	$("#sys_livs_apiurl").val(o.attr("apiurl"));
+	$("#sys_livs_appname").val(o.attr("apiname"));
+}
+</script>

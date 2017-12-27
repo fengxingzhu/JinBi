@@ -1,0 +1,59 @@
+<div style="position:absolute; top:1px; left:1px; right:1px; bottom:1px;">
+	<table id="mods-advsgrid">
+		<thead>
+			<tr>
+				<th width="40">ID</th>
+				<th width="40">排序</th>
+				<th width="180">模型名称</th>
+				<th width="180">字段选项</th>
+				<th width="100">管理</th>
+			</tr>
+		</thead>
+		<tbody>
+			<%loop class="Blocks" method="getlist"%>
+			<tr>
+				<td><%$list.id%></td>
+				<td><%$list.sort%></td>
+				<td><%$list.mtitle%></td>
+				<td><%$list.field%></td>
+				<td>
+					<a class="mx-list-edit" brurl="clips/topic/?blockedit/stid/<%$STID%>/id/<%$list.id%>.html" href="javascript:;">修改</a>
+					<a class="mx-list-remove" href="javascript:;" delid="<%$list.id%>" delname="<%$list.mtitle%>" delurl="clips/topic/do/?Blocks-del" backurl="clips/topic/?block/stid/<%$STID%>.html">删除</a>
+				</td>
+			</tr>
+			<%/loop%>
+		</tbody>
+	</table>
+</div>
+<script type="text/javascript">
+$(function(){
+	$('#mods-advsgrid').flexigrid({
+		title:'<span class="mx-sysmenu"></span> > <%$STNAME%> > 板块模型',
+		height:'auto',
+		showToggleBtn:false,
+		resizable:false,
+		defcheckbox:true,
+		buttons:[
+			{
+				name:'风格管理',
+				bclass:'mx-back',
+				onpress:function()
+				{
+					tabtreecontent('clips/topic/?stindex.html');
+				}
+			},
+			{
+				separator: true
+			},
+			{
+				name:'新增版块模型',
+				bclass:'mx-add',
+				onpress:function()
+				{
+					tabtreecontent('clips/topic/?blockadd/stid/<%$STID%>.html');
+				}
+			}			
+		]
+	});
+});
+</script>

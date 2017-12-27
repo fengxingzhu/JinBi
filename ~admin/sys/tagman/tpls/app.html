@@ -1,0 +1,40 @@
+<%import class="Data" method="getlist"%>
+<table id="TagMan-grid">
+	<thead>
+		<tr>
+			<th width="120">标签名</td>
+			<th width="120">前台显示标签</td>
+			<th width="400">标签内容</th>
+			<th width="110">操作</th>
+		</tr>
+	</thead>
+	<tbody>
+		<%loop from="data" item="list"%>
+		<tr>
+			<td><%$list.tagname%></td>
+			<td>{TAGDEF:NOP:<%$list.tagname%>}</td>
+			<td><%$list.tagcontent%></td>
+			<td><a href="javascript:;" brurl="sys/tagman/?edit/tagname/<%$list.tagname%>.html" class="mx-list-edit">修改</a><a href="javascript:;" class="mx-list-remove" delid="<%$list.tagname%>" delname="<%$list.tagname%>" delurl="sys/tagman/do/?Data-del" backurl="sys/tagman/?app.html">删除</a></td>
+		</tr>
+		<%/loop%>
+	</tbody>
+</table> 
+<script type="text/javascript">
+$(function(){
+	$('#TagMan-grid').flexigrid({
+		title:'<span class="mx-sysmenu"></span>',
+		height:'auto',
+		showToggleBtn:false,
+		resizable:false,
+		buttons : [
+			{
+				name:'新增',
+				bclass:'mx-add',
+				onpress:function(){
+					tabtreecontent("sys/tagman/?add.html");
+				}
+			}
+		]
+	});
+});
+</script>

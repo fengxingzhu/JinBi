@@ -1,0 +1,134 @@
+html { overflow:hidden; margin:0; padding:0; font-family:Arial,"微软雅黑","宋体"; font-size:12px; }
+body { margin:0; padding:0; font-size:12px; font-family:Arial,"微软雅黑","宋体"; font-size:12px; }
+
+.fl { float:left; }
+
+.header { height:40px; line-height:40px; margin:0; padding:0; background:url(../images/headerbg.gif) repeat-x; }
+.header h3 { float:left; margin:0 0 0 20px; height:40px; padding:0; color:#FFFFFF; }
+.header a.headicon { float:right; height:40px; line-height:40px; margin-right:10px; color:#FFFFFF; text-decoration:none; }
+
+.left-tree-top { height:25px; line-height:25px; margin-right:5px; padding-left:5px; }
+
+.footer { height:30px; line-height:30px; margin:0; padding:0; }
+
+.clearboth { clear:both; }
+
+/* 更换主题 */
+#mx-theme-listview { display:none; padding-left:20px; }
+#mx-theme-listview a { display:block; float:left; margin:1px; padding:1px; border:1px solid #CCCCCC; }
+#mx-theme-listview a:hover { border:1px solid #FF0000; }
+#mx-theme-listview a.selected { border:1px solid #FF0000; }
+/* 连接提示 */
+.ui-widget-content a.mx_ahref { color:#FF0000; text-decoration:underline; }
+/*错误提示*/
+#mx-sys-error {
+	position:absolute;
+	top:0;
+	left:0;
+	border:1px solid #CCCCCC;
+	z-index:100000;
+	background:#FFFFFF;
+	display:none;
+}
+#mx-sys-error-title {
+	padding:5px;
+	margin:1px;
+	border-bottom:1px solid #F0F0F0;
+}
+#mx-sys-error-content {
+	padding:5px;
+	margin:1px;
+}
+/* 正在提交的蒙版 */
+#mx-submitting {
+	position:absolute; 
+	top:0; left:0; 
+	background:#666666; 
+	z-index:10000; 
+	filter:alpha(opacity=50);
+	-moz-opacity:0.5;
+	-khtml-opacity: 0.5;
+	opacity: 0.5;
+}
+#mx-subloing {
+	position:absolute;
+	width:120px;
+	height:30px;
+	line-height:30px;
+	padding-left:10px;
+	border:1px solid #333333;
+	background:#FFFFFF;
+}
+/** 工具栏 **/
+.mx_grid_search { margin-left:10px; color:#333333; }
+.mx_grid_search .label { font-weight:100; margin-left:10px; }
+.mx_grid_search .content { font-weight:100; }
+.mx-toolbar { height:30px; line-height:30px; margin:2px 0; padding:5px 0; }
+.mx-toolbar a.button { float:left; height:30px; line-height:30px; display:block; margin:0 10px; padding:0 10px; border:1px solid #999999; text-decoration:none; }
+.mx-toolbar a.button:hover { border:1px solid #669933; background:#E7E7E7; padding:0 10px; }
+
+.mx-list-icon {
+	display:block; 
+	height:16px;
+	line-height:16px;
+	vertical-align:middle;
+	width:40px; 
+	float:left; 
+	background:url(../images/add.gif) no-repeat center left; 
+	text-indent:16px; 
+	margin:0 5px;
+	text-decoration:none;
+	color:#000000;
+}
+
+.mx-handsort { background:url(../images/sort.png) no-repeat center left; }
+.mx-add { background:url(../images/add.gif) no-repeat center left; }
+.mx-edit { background:url(../images/edit.gif) no-repeat center left; }
+.mx-delete { background:url(../images/del.gif) no-repeat center left; }
+.mx-autosort { background:url(../images/advmod.png) no-repeat center left; }
+.mx-handsort { background:url(../images/handsort.png) no-repeat center left; }
+.mx-search { background:url(../images/searchall.png) no-repeat center left; }
+.mx-back { background:url(../images/back.png) no-repeat center left; }
+
+.mx-list-filldata { background:url(../images/filldata.png) no-repeat center left; }
+.mx-list-syngrade { background:url(../images/syngrade.png) no-repeat center left; }
+
+/** 列表编辑 **/
+.mx-list-add { display:block; width:40px; float:left; background:url(../images/add.gif) no-repeat center left; text-indent:16px; margin:0 5px; }
+.mx-list-edit { display:block; width:40px; float:left; background:url(../images/edit.gif) no-repeat center left; text-indent:16px; margin:0 5px; }
+.mx-list-remove { display:block; width:40px; float:left; background:url(../images/del.gif) no-repeat center left; text-indent:16px; margin:0 5px; }
+.mx-list-test { display:block; width:40px; float:left; background:url(../images/update.png) no-repeat center left; text-indent:16px; margin:0 5px; }
+.mx-list-pickout { display:block; width:60px; float:left; background:url(../images/uploadicon.png) no-repeat center left; text-indent:16px; margin:0 5px; }
+.mx-list-pickdata { display:block; width:40px; float:left; background:url(../images/datainfo.png) no-repeat center left; text-indent:16px; margin:0 5px; }
+/* 复制 */
+.mx-copytext { background:url(../images/copy.png) no-repeat center left; text-indent:20px; cursor:pointer; display:block; }
+/* 表单样式 */
+input.text { width:95%; padding:.4em; }
+.ui-button { outline: 0; margin:0; padding: .4em 1em .5em; text-decoration:none;  !important; cursor:pointer; position: relative; text-align: center; }
+.ui-dialog .ui-state-highlight, .ui-dialog .ui-state-error { padding: .3em;  }
+
+.gridcheck { margin:0; padding:0; height:14px; display:block; }
+/** formpanel */
+.mx-formdata { display:none; }
+.mx-formpanel { width:100%; margin:0; padding:0; overflow:auto; }
+.mx-formpanel form  { margin:0; padding:0; }
+.mx-formpanel fieldset { margin:0 10px; padding:2px 15px; }
+.mx-formpanel fieldset legend { margin:0; padding:0; }
+.mx-formpanel form table tr td { vertical-align:top; }
+.mx-formpanel label { height:20px; line-height:20px; margin:3px 0; padding:0; display:block; border-bottom:1px solid #CCCCCC; }
+.mx-formpanel input { height:20px; line-height:20px; margin:0; padding:0; }
+.mx-formpanel select { height:20px; line-height:20px; margin:0; padding:0; }
+.mx-formpanel textarea { line-height:20px; margin:0; padding:0; }
+.mx-formpanel .datalist { margin:0; padding:0; }
+.mx-formpanel .datalist span { display:block; float:left; }
+.mx-formpanel .datalist span em { float:left; font-style:normal; }
+.mx-formpanel .datalist span input { float:left; margin:0; padding:0; }
+.mx-formpanel form .mx-form-submit { height:50px; margin:0; }
+.mx-formpanel form .mx-form-submit input { height:30px; line-height:30px; padding:0 10px; cursor:pointer; }
+.mx-formpanel form .mx-formup-img { cursor:pointer; margin:0; }
+.mx-formpanel form .mx-formsimpleup-img { cursor:pointer; margin:0; }
+.mx-formpanel form .mx-fileupload-imglist { cursor:pointer; margin:0; }
+.mx-formpanel form .dataerror { border:1px solid #FF0000; }
+.mx-formpanel form .tiperror { color:#FF0000; background:url(../images/fielderror.png) center left no-repeat; padding-left:20px; }
+.mx-formpanel form .mx-fileupload-simpleimg { cursor:pointer; margin:0; }
+.mx-formpanel form .gradesearchfieldata { display:none; }

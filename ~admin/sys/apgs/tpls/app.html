@@ -1,0 +1,46 @@
+<table id="Apgs-grid">
+  <thead>
+	<tr>
+		<th width="50">分类ID</th>
+		<th width="80">创建者</th>
+		<th width="100">分类类型</th>
+		<th width="200">分类名称</th>
+		<th width="120">分类标识(表名前缀)</th>
+		<th width="100">操作</th>
+	</tr>
+</thead>
+   <tbody>
+		<%loop class="Apgs" method="getgroups" item="list"%>
+		<tr>
+			<td><%$list.id%></td>
+			<td><%$list.name%></td>
+			<td><span class="mx-mapping" key="apgs_typedata"><%$list.typeid%></span></td>
+			<td><%$list.gname%></td>
+			<td><%$list.gdir%></td>
+			<td><a href="javascript:;" brurl="sys/apgs/?edit/id/<%$list.id%>.html" class="mx-list-edit">修改</a><a href="javascript:;" class="mx-list-remove" delid="<%$list.id%>" delname="<%$list.gname%>" delurl="sys/apgs/do/?Apgs-del" backurl="sys/apgs/?app.html">删除</a></td>
+		</tr>
+		<%/loop%>
+</tbody>
+</table>
+<script type="text/javascript">
+$(function(){
+	$('#Apgs-grid').flexigrid({
+		title:'<span class="mx-sysmenu"></span>',
+		height:'auto',
+		showToggleBtn:false,
+		resizable:false,
+		buttons:[
+			{
+				name:'新增',
+				bclass:'mx-add',
+				onpress:function(){
+					var url = "sys/apgs/?add.html";
+					tabtreecontent(url);
+					$.mx.setparam('url',url);
+				}
+			}
+		]
+	});
+});
+addmapping('apgs_typedata',['组件','自定义']);
+</script>

@@ -1,0 +1,51 @@
+<%import class="Form" method="getinfo,getform,fieldplusjs"%>
+<%$FORMJS%>
+<div class="ui-state-default left-tree-top" style="margin-right:0;">
+	<span><span class="mx-sysmenu"></span><%$REXTITLE%> -- 修改</span>
+</div>
+<div class="mx-toolbar">
+	<a href="javascript:;" class="button" brurl="util/grid/?app/ag/<%$CONFINI.proname%>/tp/<%$TP%>.html"><span class="mx-sysmenu-tree"></span></a>
+</div>
+<div class="mx-formpanel">
+	<form class="ajaxform" method="post" action="util/grid/do/?Form-edit/ag/<%$CONFINI.proname%>/tp/<%$TP%>/id/<%$info.id%>.html">
+	  <fieldset style="width:<%$FIELDSETWIDTH%>px;">
+	  <textarea name="formDataInfo" class="mx-formdata"><%$data%></textarea>
+	  <legend>修改<span class="mx-sysmenu-tree"></span></legend>
+	  <%$FIELDNODISPLAY%>
+	  <table border="0">
+        <tr>
+        <%$FIELDPANEL%>
+		</tr>
+		<% if($VAL['CONFINI']['cfg_top_key']==1 || $VAL['CONFINI']['cfg_pub_key']==1){ %>
+		<tr>
+          <td width="<%$FIELDSETWIDTH%>" colspan="<%$FIELDCOLSPAN%>">
+		  <label>发布信息</label>
+		  <% if($VAL['CONFINI']['cfg_top_key']==1){ %>
+		  <div style="width:50%; float:left;">
+		  	置顶： 是<input name="__systop" type="radio" value="1" style="height:12px; line-height:12px;" <% if($VAL['info']['__systop']==1) echo 'checked="checked"'; %> />　　否<input name="__systop" type="radio" value="0" style="height:12px; line-height:12px;" <% if($VAL['info']['__systop']==0) echo 'checked="checked"'; %> />
+		  </div>
+		  <% } %>
+		  <% if($VAL['CONFINI']['cfg_pub_key']==1){ %>
+		  <div style="width:50%; float:left;">
+		  	是否发布： 是<input name="__syspub" type="radio" value="1" style="height:12px; line-height:12px;" <% if($VAL['info']['__syspub']==1) echo 'checked="checked"'; %> />　　否<input name="__syspub" type="radio" value="0" style="height:12px; line-height:12px;" <% if($VAL['info']['__syspub']==0) echo 'checked="checked"'; %> />
+		  </div>
+		  <% } %>
+		  </td>
+        </tr>
+		<% }else{ %>
+		<tr style="display:none;">
+			<td width="<%$FIELDSETWIDTH%>" colspan="<%$FIELDCOLSPAN%>">
+				<input name="__systop" type="radio" value="0" checked="checked" />
+				<input name="__syspub" type="radio" value="1" checked="checked" />
+			</td>
+		</tr>
+		<% } %>
+		<tr>
+          <td width="<%$FIELDSETWIDTH%>" class="mx-form-submit" colspan="<%$FIELDCOLSPAN%>">
+		    <input type="submit" name="submitButton" value="提　交" />
+		  </td>
+        </tr>
+      </table>
+	  </fieldset>
+	</form>
+</div>

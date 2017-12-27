@@ -1,0 +1,58 @@
+<div class="ui-state-default left-tree-top" style="margin-right:0;">
+	<span><span class="mx-sysmenu"></span> > 广告模型 > 修改</span>
+</div>
+<div class="mx-toolbar">
+	<a class="button" brurl="clips/adv/?advs.html" href="javascript:;">广告模型</a>
+</div>
+<%import class="Advmod" method="getinfo"%>
+<div class="mx-formpanel">
+	<form class="ajaxform" method="post" action="clips/adv/do/?Advmod-edit/id/<% echo $_GET['id']; %>.html">
+	  <textarea name="formDataInfo" class="mx-formdata"><%$data%></textarea>
+	  <fieldset style="width:500px;">
+	  <legend>修改模型</legend>
+	  <table border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="500">
+		  	<label>模型名称</label>
+			<input type="text" autocomplete="off" name="atitle" class="text" value="" dataType="Require" itip="请填写模型名称">
+		  </td>
+        </tr>
+		<tr>
+          <td width="500">
+		  	<label>JS</label>
+			<textarea name="pubjs" class="textarea" style="height:200px;"></textarea>
+		  </td>
+        </tr>
+		<tr>
+          <td width="500">
+		  	<label>CSS</label>
+			<textarea name="pubcss" class="textarea" style="height:200px;"></textarea>
+		  </td>
+        </tr>
+		<tr>
+          <td width="500">
+		  	<label>执行代码</label>
+			<textarea name="dofun" class="textarea" style="height:60px;"></textarea>
+		  </td>
+        </tr>
+		<tr>
+          <td width="500">
+		  	<label>预览代码</label>
+			<textarea name="viewcode" class="textarea" style="height:60px;"></textarea>
+		  </td>
+        </tr>
+		<tr>
+          <td width="500">
+		  	<label>排序</label>
+			<input type="text" autocomplete="off" name="sort" class="text" value="">
+		  </td>
+        </tr>
+		<tr>
+          <td width="500" class="mx-form-submit">
+		  	<input type="submit" name="submitButton" ajax="menuadd" value="提　交" />
+		  </td>
+        </tr>
+      </table>
+	  </fieldset>
+	</form>
+</div>

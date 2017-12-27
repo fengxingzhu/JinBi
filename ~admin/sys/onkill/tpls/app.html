@@ -1,0 +1,163 @@
+<style type="text/css">
+#mx-killwindow {
+	position:absolute;
+	z-index:10000;
+	padding:10px;
+	border:2px solid #333333;
+	background:#FFFFFF;
+	overflow:auto;
+}
+</style>
+<table id="Onkill-grid"></table>
+<script type="text/javascript">
+$(function(){
+	$('#Onkill-grid').flexigrid({
+		title:'<span class="mx-sysmenu"></span>',
+		url:'sys/onkill/do/?Onkill-glist/',
+		dataType:'json',
+		height:'auto',
+		colModel:[
+			{
+				display :"ID",
+				name:"id",
+				width:40,
+				sortable:true,
+				align:"center"
+			},
+			{
+				display :"用户名",
+				name:"name",
+				width:60,
+				sortable:true,
+				align:"center"
+			},
+			{
+				display :"总文件数",
+				name:"totalline",
+				width:160,
+				sortable:true,
+				align:"center"
+			},
+			{
+				display :"已完成文件数",
+				name:"scanline",
+				width:160,
+				sortable:true,
+				align:"center"
+			},
+			{
+				display :"扫描结果",
+				name:"scanres",
+				width:160,
+				sortable:true,
+				align:"center"
+			},
+			{
+				display :"操作时间",
+				name:"optdate",
+				width:160,
+				sortable:true,
+				align:"center"
+			}
+		],
+		sortname: "id",
+		sortorder: "desc",
+		usepager:true,
+		rp:10,
+		checkbox:true,
+		showToggleBtn:false,
+		resizable:false,
+		onToggleCol:true,
+		buttons : [
+			{
+				name:'开始杀毒',
+				bclass: 'mx-add',
+				onpress:function(){
+					//正在向服务器传送数据
+					var omask = $("#mx-killmaskdiv"),
+						_winwidth = 360,
+						_winheight = 200;
+					if(omask.length<1){
+						omask = $("<div>").appendTo("body");
+						omask.attr("id","mx-killmaskdiv");
+						var oling = $("<div>").appendTo(omask);
+						oling.attr("id","mx-killwindow");
+						oling.html('开始扫描文件...');
+					}
+					var _w = $.mx.width(),_h = $.mx.height();
+					omask.css({width:_w,height:_h});
+					$("#mx-killwindow").css({
+						width:_winwidth,
+						height:_winheight,
+						left:(_w-_winwidth)/2,
+						top:(_h-_winheight)/2
+					});
+					omask.show();
+					__killprogramemsg = "";
+					__killprograme('scans',{});
+				}
+			},
+			{
+				separator: true
+			},
+			{
+				name: '删除',
+				bclass: 'mx-delete',
+				onpress : function(){
+					var ids = [];
+					$('#Onkill-grid input[type="checkbox"][class="noborder"]').each(function(i,o){
+						var _val = $(o).val();
+						_val = _val.substr(3,_val.length);
+						$(o).attr("checked")?ids.push(_val):"";
+					});
+					var _ids = ids.join(",");
+					if(_ids==""){
+						Tip({title:'删除提示:',content:'请选择要删除列表项'});
+					}else{
+						$.post('sys/onkill/do/?Onkill-del/',{ids:_ids},function(text){
+							Tip({title:'删除提示:',content:'删除成功!'});
+							tabtreecontent('sys/onkill/?app.html');
+						});
+					}
+				}
+			}
+		],
+		searchitems:[
+			{
+				display:'全部',
+				name:'__allkeyword'
+			},
+			{
+				display:'姓名',
+				name:'name'
+			},
+			{
+				display:'IP',
+				name:'ip'
+			},
+			{
+				display:'地点',
+				name:'address'
+			}
+		]
+	});
+});
+var __killprogramemsg = '';
+//杀毒信息
+function __killprograme(stepapp,postdata)
+{
+	$.post("sys/onkill/do/?Onkill-"+stepapp+"/",postdata,function(res){
+		var okwin = $("#mx-killwindow");
+		if(okwin.length>0){
+			var data = encode(res);
+			if(parseInt(data.end)==0){
+				__killprogramemsg = data.msg+__killprogramemsg;
+				okwin.html(__killprogramemsg);
+				setTimeout("__killprograme('"+data.stepapp+"',"+res+")",1000);
+			}else{
+				tabtreecontent('sys/onkill/?app.html');
+			}
+		}
+	});
+}
+</script>

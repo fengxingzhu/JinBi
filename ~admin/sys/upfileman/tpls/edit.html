@@ -1,0 +1,40 @@
+<%import class="Upfileman" method="getdata"%>
+<div class="ui-state-default left-tree-top" style="margin-right:0;">
+	<span><span class="mx-sysmenu-tree"></span> > 修改</span>
+</div>
+<div class="mx-toolbar">
+	<a href="javascript:;" class="button" brurl="sys/upfileman/?app.html"><span class="mx-sysmenu-tree"></span></a>
+</div>
+<div class="mx-formpanel">
+	<form class="ajaxform" method="post" action="sys/upfileman/do/?Upfileman-edit/id/<%$info.id%>.html">
+	  <fieldset style="width:500px;">
+	  <textarea name="formDataInfo" class="mx-formdata"><%$data%></textarea>
+	  <legend>修改上传文件类型</legend>
+	  <table border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="500">
+		    <label>文件分类名</label>
+			<input type="text" name="ftype" dataType="Require" itip="请填写文件分类名" />
+		  </td>
+		</tr>
+		<tr>
+          <td width="500">
+		  	<label>充许的后缀名(后缀名不分大小写,以逗号分隔,例如jpg,gif,png)</label>
+			<input type="text" name="exts" dataType="Require" itip="请填写充许的后缀名" />
+		  </td>
+        </tr>
+		<tr>
+          <td width="500">
+		    <label>排序</label>
+			<input type="text" name="sort" value="0" />
+		  </td>
+        </tr>
+		<tr>
+          <td width="300" class="mx-form-submit" colspan="2">
+		    <input type="submit" name="submitButton" value="提　交" />
+		  </td>
+        </tr>
+      </table>
+	  </fieldset>
+	</form>
+</div>

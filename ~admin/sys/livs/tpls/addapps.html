@@ -1,0 +1,56 @@
+<%import class="AddApps" method="readdirs"%>
+<div class="ui-state-default left-tree-top" style="margin-right:0;">
+	<span>组件实例 -- 添加模型</span>
+</div>
+<div class="mx-toolbar">
+	<a href="javascript:;" class="button" brurl="sys/livs/?app.html">组件实例</a>
+</div>
+<div class="mx-formpanel">
+	<form class="ajaxform" method="post" action="sys/livs/do/?AddApps-add.html">
+	  <fieldset style="width:300px;">
+	  <legend>创建模型</legend>
+	  <table border="0" cellspacing="0" cellpadding="0">
+	  	<tr>
+          <td width="300">
+		    <label>模型类别</label>
+			<select name="appdir" dataType="Require" itip="模型类别必须选择">
+				<%loop from="dirdata" item="list"%>
+					<option value="<%$list%>"><%$list%></option>
+				<%/loop%>
+			</select>
+			<input name="appids" type="hidden" value="<%$APPIDS%>" />
+		  </td>
+        </tr>
+		<tr>
+          <td width="300">
+		    <label>模型英文名称</label>
+			<input type="text" name="enname" dataType="EngNum" itip="模型英文名称只能填写英文和数字"/>
+		  </td>
+        </tr>
+        <tr>
+          <td width="300">
+		    <label>模型中文名称</label>
+			<input type="text" name="name" dataType="Require" itip="模型中文名称必须填写"/>
+		  </td>
+        </tr>
+		<tr>
+          <td width="300">
+		    <label>作者</label>
+			<input type="text" name="author" dataType="Require" itip="作者必须填写"/>
+		  </td>
+        </tr>
+        <tr>
+          <td width="300">
+		    <label>描述</label>
+			<textarea name="summary" dataType="Require" itip="描述填写"></textarea>
+		  </td>
+        </tr>
+		<tr>
+          <td width="300" class="mx-form-submit">
+		    <input type="submit" name="submitButton" value="提　交" />		  
+		  </td>
+        </tr>
+      </table>
+	  </fieldset>
+	</form>
+</div>

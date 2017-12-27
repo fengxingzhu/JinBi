@@ -1,0 +1,34 @@
+<%import class="Calist" method="getapplivs,getinfo"%>
+<div class="ui-state-default left-tree-top" style="margin-right:0;">
+	<span><span class="mx-sysmenu"></span> > <%$applivs.appname%> > 修改</span>
+</div>
+<div class="mx-toolbar">
+	<a href="javascript:;" class="button" brurl="sys/livs/?calist/fid/<%$applivs.id%>.html"><%$applivs.appname%></a>
+</div>
+<div class="mx-formpanel">
+	<form class="ajaxform" method="post" action="sys/livs/do/?Calist-edit/id/<%$info.id%>.html">
+	  <fieldset style="width:500px;">
+	  <legend>修改</legend>
+	  <textarea name="formDataInfo" class="mx-formdata"><%$data%></textarea>
+	  <table border="0" cellspacing="0" cellpadding="0">
+		<tr>
+          <td width="500">
+		    <label>前台连接[当前信息ID标记为(id),当前分类ID标记为(tid),以网站根目录为起始]</label>
+			<input type="text" name="bakurl" dataType="Require" itip="请填写前台连接" /><input name="appid" type="hidden" value="<%$applivs.id%>">
+		  </td>
+        </tr>
+		<tr>
+          <td width="500">
+		    <label>生成文件[当前信息ID标记为(id),当前分类ID标记为(tid),以网站根目录为起始]</label>
+			<input type="text" name="creaturl" dataType="Require" itip="请填写生成文件" />
+		  </td>
+        </tr>
+		<tr>
+          <td width="500" class="mx-form-submit">
+		    <input type="submit" name="submitButton" value="提　交" />
+		  </td>
+        </tr>
+      </table>
+	  </fieldset>
+	</form>
+</div>

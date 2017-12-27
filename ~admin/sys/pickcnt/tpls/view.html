@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>查看采集内容</title>
+<style type="text/css">
+.info { margin:0 auto; width:800px; }
+.info dl dt { border-bottom:1px dotted #999999; }
+</style>
+</head>
+
+<body>
+<%import class="Data" method="viewinfo"%>
+<div class="info">
+	<h3>栏目:<%$info.title%></h3>
+	<div>来源连接:<a href="<%$info.links%>" target="_blank"><%$info.links%></a></div>
+	<%loop from="data" item="list"%>
+	<dl>
+		<dt><%$list.fname%></dt>
+		<dd><%$list.fval%></dd>
+	</dl>
+	<%/loop%>
+</div>
+</body>
+</html>

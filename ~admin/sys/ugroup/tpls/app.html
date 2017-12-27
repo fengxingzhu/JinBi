@@ -1,0 +1,40 @@
+<script type="text/javascript">
+$(function(){
+	$('#Ugroup-grid').flexigrid({
+		title:'<span class="mx-sysmenu"></span>',
+		height:'auto',
+		showToggleBtn:false,
+		resizable:false,
+		buttons : [
+			{
+				name:'新增',
+				bclass:'mx-add',
+				onpress:function(){
+					var url = "sys/ugroup/?add.html";
+					tabtreecontent(url);
+					$.mx.setparam('url',url);
+				}
+			}
+		]
+	});
+});
+</script>
+<%import class="Ugroup" method="getglist"%>
+<table id="Ugroup-grid">
+  <thead>
+	<tr>
+		<th width="26">ID</th>
+		<th width="300">角色名称</th>
+		<th width="180">操作</th>
+	</tr>
+</thead>
+   <tbody>
+		<%loop from="data" item="list"%>
+		<tr>
+			<td><%$list.id%></td>
+			<td><%$list.title%></td>
+			<td><a href="javascript:;" brurl="sys/ugroup/?edit/id/<%$list.id%>.html" class="mx-list-edit">修改</a><a href="javascript:;" class="mx-list-remove" delid="<%$list.id%>" delname="<%$list.title%>" delurl="sys/ugroup/do/?Ugroup-del" backurl="sys/ugroup/?app.html">删除</a></td>
+		</tr>
+		<%/loop%>
+</tbody>
+</table>

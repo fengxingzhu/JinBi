@@ -1,0 +1,85 @@
+<%import class="Blocks"%>
+<div class="ui-state-default left-tree-top" style="margin-right:0;">
+	<span><span class="mx-sysmenu-tree"></span> > <%$STNAME%> > 板块模型 > 新增</span>
+</div>
+<div class="mx-toolbar">
+	<a class="button" brurl="clips/topic/?block/stid/<%$STID%>.html" href="javascript:;">返回板块模型</span></a>
+</div>
+<div class="mx-formpanel">
+	<form class="ajaxform" method="post" action="clips/topic/do/?Blocks-add/stid/<%$STID%>.html">
+	  <fieldset style="width:500px;">
+	  <input name="stid" type="hidden" value="<%$STID%>" />
+	  <legend>新增板块模型</legend>
+	  <table border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="500">
+		  	<label text="模型名称">模型名称</label>
+			<input type="text" autocomplete="off" name="mtitle" class="text" value="" dataType="Require" itip="请填写模型名称">
+		  </td>
+        </tr>
+		<tr>
+          <td width="500">
+		  	<label text="字段选项">字段选项</label>
+			<div col="3" name="fields[]" class="datalist" itip="请选择字段选项" datatype="Group">
+				<span>
+					<input type="checkbox" keyid="0" value="标题(title)" name="fields[]" class="groupdata">
+					<em>标题(title)</em>
+				</span>
+				<span>
+					<input type="checkbox" keyid="1" value="连接(link)" name="fields[]" class="groupdata">
+					<em>连接(link)</em>
+				</span>
+				<span>
+					<input type="checkbox" keyid="2" value="图片(pic,pic_path)" name="fields[]" class="groupdata">
+					<em>图片(pic,pic_path)</em>
+				</span>
+				<span>
+					<input type="checkbox" keyid="3" value="简介(intro)" name="fields[]" class="groupdata">
+					<em>简介(intro)</em>
+				</span>
+				<span>
+					<input type="checkbox" keyid="4" value="作者(author)" name="fields[]" class="groupdata">
+					<em>作者(author)</em>
+				</span>
+				<span>
+					<input type="checkbox" keyid="5" value="时间(date)" name="fields[]" class="groupdata">
+					<em>时间(date)</em>
+				</span>
+			</div>
+			<input type="hidden" name="field" value="">
+			<input type="hidden" name="field_key" value="">
+		  </td>
+        </tr>
+		<tr>
+          <td width="500">
+		  	<label text="编辑数量(0为不限)">编辑数量(0为不限,当不限时图片大小以图片大小参数的第一行为准。)</label>
+			<input type="text" autocomplete="off" name="editnum" datatype="Number" itip="请填写编辑数量">
+		  </td>
+        </tr>
+		<tr>
+          <td width="500">
+		  	<label text="图片大小">图片大小(例如0,200,300表示第一个图片大小,*,200,300表示每个图片大小都是这个大小)</label>
+			<textarea name="picimg" class="textarea" style="height:50px;"></textarea>
+		  </td>
+        </tr>
+		<tr>
+          <td width="500">
+		  	<label text="前台展现代码">前台展现代码</label>
+			<textarea name="viewcode" class="textarea" style="height:200px;"></textarea>
+		  </td>
+        </tr>
+		<tr>
+          <td width="500">
+		  	<label text="排序">排序</label>
+			<input type="text" autocomplete="off" name="sort" class="text" value="">
+		  </td>
+        </tr>
+		<tr>
+          <td width="500" class="mx-form-submit">
+		  	<input type="submit" name="submitButton" ajax="menuadd" value="提　交" />
+		  </td>
+        </tr>
+      </table>
+	  </fieldset>
+	</form>
+</div>

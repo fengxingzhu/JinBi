@@ -1,0 +1,44 @@
+<div class="ui-state-default left-tree-top">
+	<span><span class="mx-sysmenu-tree"></span> > 新增站点</span>
+</div>
+<div class="mx-toolbar">
+	<a href="javascript:;" class="button" brurl="sys/verman/?app.html"><span class="mx-sysmenu-tree"></span></a>
+</div>
+<div class="mx-formpanel">
+	<form class="ajaxform" method="post" action="sys/verman/do/?Data-add.html">
+	  <fieldset style="width:500px;">
+	  <legend>新增站点(特别申明：站点创建后,将不能删除)</legend>
+	  <table border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="500">
+		    <label>站点名称</label>
+			<input type="text" name="webname" dataType="Require" itip="请填写站点名称" />
+		  </td>
+        </tr>
+		<tr>
+          <td width="500">
+		    <label>站点标识</label>
+			<input type="text" name="tag" dataType="Require" itip="请填写站点标识" />
+		  </td>
+        </tr>
+		<tr>
+          <td width="500">
+		    <label>超管账号(默认密码：123456)</label>
+			<input type="text" name="username" dataType="Require" itip="请填写超管账号" />
+		  </td>
+        </tr>
+		<tr>
+          <td width="500">
+		    <label>站点描述</label>
+			<textarea name="summary"></textarea>
+		  </td>
+        </tr>
+		<tr>
+          <td width="500" class="mx-form-submit">
+		    <input type="submit" name="submitButton" value="提　交" />
+		  </td>
+        </tr>
+      </table>
+	  </fieldset>
+	</form>
+</div>

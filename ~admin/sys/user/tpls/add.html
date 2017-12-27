@@ -1,0 +1,56 @@
+<div class="ui-state-default left-tree-top" style="margin-right:0;">
+	<span><span class="mx-sysmenu"></span> > 新增</span>
+</div>
+<div class="mx-toolbar">
+	<a href="javascript:;" class="button" brurl="sys/user/?app.html"><span class="mx-sysmenu-tree"></span></a>
+</div>
+<div class="mx-formpanel">
+	<form class="ajaxform" method="post" action="sys/user/do/?User-add.html">
+	  <fieldset style="width:300px;">
+	  <legend>新增用户(用户默认密码为:mxpassword)</legend>
+	  <table border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="150">
+		    <label>用户名</label>
+			<input type="text" name="username" dataType="Require" itip="请填写用户名" />
+		  </td>
+          <td width="150">
+		  	<label>姓名</label>
+			<input type="text" name="name" dataType="Require" itip="请填写姓名" />
+		  </td>
+        </tr>
+        <tr>
+          <td width="150">
+		    <label>电话</label>
+			<input type="text" name="tel" />
+		  </td>
+          <td width="150">
+		  	<label>手机</label>
+			<input type="text" name="mobile" />
+		  </td>
+        </tr>
+		<tr>
+          <td width="300" colspan="2">
+		    <label>Email</label>
+			<input type="text" name="email" />
+		  </td>
+        </tr>
+		<tr>
+          <td width="300" colspan="2">
+		    <label>角色</label>
+			<select name="gid" dataType="Require" itip="请选择角色">
+				<%loop class="User" method="getgroups" item="list"%>
+				<option value="<%$list.id%>"><%$list.title%></option>
+				<%/loop%>
+			</select>
+		  </td>
+        </tr>
+		<tr>
+          <td width="300" class="mx-form-submit" colspan="2">
+		    <input type="submit" name="submitButton" value="提　交" />
+		  </td>
+        </tr>
+      </table>
+	  </fieldset>
+	</form>
+</div>

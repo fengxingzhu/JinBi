@@ -1,0 +1,37 @@
+<div class="ui-state-default left-tree-top" style="margin-right:0;">
+	<span><span class="mx-sysmenu"></span> > 新增推送文本消息</span>
+</div>
+<div class="mx-toolbar">
+	<a href="javascript:;" class="button" brurl="weixin/?pushmsgs.html"><span class="mx-sysmenu-tree"></span></a>
+</div>
+<div class="mx-formpanel">
+	<form class="ajaxform" method="post" action="weixin/server/push.php?type=text">
+	  <fieldset style="width:500px;">
+	  <legend>新增推送文本消息</legend>
+	  <table border="0" cellspacing="0" cellpadding="0">
+	  	<tr>
+			<td width="500">
+		  	<label text="选择粉丝">选择粉丝</label>
+			<select name="openid">
+				<option value="0">全部粉丝</option>
+				<%loop class="PushMsgs" method="getfans"%>
+				<option value="<%$list.openid%>"><%$list.nickname%></option>
+				<%/loop%>
+			</select>
+		  </td>
+		</tr>
+		<tr>
+          <td width="500">
+		  	<label text="推送内容">推送内容</label>
+			<textarea name="content" dataType="Require" itip="请填写推送内容"></textarea>
+		  </td>
+        </tr>
+		<tr>
+          <td width="500" class="mx-form-submit">
+		  	<input type="submit" name="submitButton" value="提　交" />
+		  </td>
+        </tr>
+      </table>
+	  </fieldset>
+	</form>
+</div>

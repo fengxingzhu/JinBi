@@ -1,0 +1,63 @@
+<table id="Msgs-grid">  
+</table>
+<script type="text/javascript">
+$(function(){
+	$('#Msgs-grid').flexigrid({
+		title:'<span class="mx-sysmenu"></span>',
+		url:'weixin/do/?Msgs-getlist/',
+		dataType:'json',
+		height:'auto',
+		colModel:[
+			{
+				display :"ID",
+				name:"id",
+				width:60,
+				sortable:true,
+				align:"left"
+			},
+			{
+				display :"昵称",
+				name:"nickname",
+				width:100,
+				sortable:true,
+				align:"left"
+			},
+			{
+				display :"消息类型",
+				name:"msgtype",
+				width:40,
+				sortable:true,
+				align:"left"
+			},
+			{
+				display :"消息",
+				name:"content",
+				width:200,
+				sortable:true,
+				align:"left"
+			},
+			{
+				display :"图像",
+				name:"picurl",
+				width:120,
+				sortable:true,
+				align:"left"
+			},
+			{
+				display :"创建时间",
+				name:"createtime",
+				width:160,
+				sortable:true,
+				align:"left"
+			}
+		],
+		sortname: "id",
+		sortorder: "desc",
+		usepager:true,
+		rp:20,
+		showToggleBtn:false,
+		resizable:false,
+		onToggleCol:true
+	});
+});
+</script>

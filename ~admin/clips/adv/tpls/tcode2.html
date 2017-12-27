@@ -1,0 +1,132 @@
+<style type="text/css">
+.tcode-column { width:720px; float:left; padding:0; }
+.portlet { border:1px solid #999999; margin:5px; }
+.portlet-header { margin: 0.3em; padding-bottom: 4px; padding-left: 0.2em; }
+.portlet-header .ui-icon { float: right; }
+.portlet-content { padding: 0.4em; }
+.ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; height: 50px !important; }
+.ui-sortable-placeholder * { visibility: hidden; }
+</style>
+<%import class="Data" method="getinfo"%>
+<div class="ui-state-default left-tree-top" style="margin-right:0;">
+	<span><span class="mx-sysmenu-tree"></span> > 编辑广告(对联)</span>
+</div>
+<div class="mx-toolbar">
+	<a class="button" brurl="clips/adv/?app.html" href="javascript:;">返回<span class="mx-sysmenu-tree"></span></a>
+</div>
+<div class="mx-formpanel">
+	<form class="ajaxform" befun="cpadvload" method="post" action="clips/adv/do/?Data-advdata/id/<% echo $_GET['id']; %>.html">
+		<textarea style="display:none;" name="datajson"><%$info.datajson%></textarea>
+		<div class="tcode-column">
+			
+		</div>
+		<table width="700" border="0" cellpadding="0" cellspacing="0" style="padding:0 10px; float:left;">
+			<tr>
+				<td width="700" class="mx-form-submit">
+					<input type="submit" name="submitButton" ajax="menuadd" value="提　交" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+<script type="text/javascript">
+//图片信息框
+function clips_adv_picbox(cfg)
+{
+	var idtime = (new Date()).valueOf(),
+		dd = cfg?cfg:{title:'',link:'',pic:'',pic_path:''},
+		_width = '<%$info.width%>';
+		_height = '<%$info.height%>';
+	var d = [
+		'<div class="portlet">',
+			'<div class="portlet-header"><span class="ui-icon ui-icon-plusthick"></span>图片信息(支持拖拽排序):</div>',
+				'<div class="portlet-content">',
+					'<table border="0" cellpadding="0" cellspacing="0">',
+						'<tr>',
+						  '<td width="700">',
+							'<label>图片:</label>',
+							'<input type="file" style="width:670px;" size="100" id="sys-advs-uploadpics'+idtime+'" autocomplete="off" name="pic" cw="'+_width+'" ch="'+_height+'" prefix="../" class="imgupload" value="" onchange="return mxajaxFileUpload(this);">',
+							'<input name="pic" type="hidden" id="sys-advs-uploadpics'+idtime+'-name" value="'+dd.pic+'" />',
+							'<input name="pic_path" type="hidden" id="sys-advs-uploadpics'+idtime+'-path" value="'+dd.pic_path+'" />',
+							'<img id="sys-advs-uploadpics'+idtime+'-src" style="display:'+(dd.pic_path==''?'none':'block')+';" src="../'+dd.pic_path+'" />',
+						  '</td>',
+						'</tr>',
+						'<tr>',
+						  '<td width="700">',
+							'<label>链接:</label>',
+							'<input type="text" autocomplete="off" name="link" class="text" value="'+dd.link+'">',
+						  '</td>',
+						'</tr>',
+						'<tr>',
+						  '<td width="700">',
+							'<label>描述:</label>',
+							'<input type="text" autocomplete="off" name="title" class="text" value="'+dd.title+'">',
+						  '</td>',
+						'</tr>',
+					'</table>',
+				'</div>',
+			'</div>'];
+	return d.join('');
+}
+//图片信息事件
+function clips_adv_picevent()
+{
+	$(".tcode-column").sortable({
+		connectWith: '.column'
+	});
+	$(".portlet").addClass("ui-widget ui-widget-content ui-helper-clearfix ui-corner-all")
+		.find(".portlet-header")
+			.addClass("ui-widget-header ui-corner-all")
+			.end()
+		.find(".portlet-content");
+
+	$(".portlet-header .ui-icon-plusthick").click(function() {
+		$(this).toggleClass("ui-icon-minusthick");
+		$(this).parents(".portlet:first").find(".portlet-content").toggle();
+	});
+	
+	$(".portlet-header .ui-icon-closethick").click(function() {
+		$(this).parent().parent().remove();
+	});
+
+	$(".tcode-column").disableSelection();
+}
+//添加一个空白的图片信息
+function clips_adv_empty()
+{
+	$('.mx-formpanel .tcode-column').append(clips_adv_picbox());
+	clips_adv_picevent();
+}
+//提交数据
+$.mx.formbefun.cpadvload = function(){
+	var oportlet = $('.mx-formpanel .portlet'),
+		portlen = oportlet.length,
+		data = [];
+	for(var i=0;i<portlen;i++){
+		var _oplet = oportlet.eq(i);
+		data.push({
+			title:_oplet.find('input[name="title"]').val(), //描述
+			link:_oplet.find('input[name="link"]').val(), 	//连接
+			pic:_oplet.find('input[name="pic"]').val(),	//图片名称
+			pic_path:_oplet.find('input[name="pic_path"]').val() //图片名称路径
+		});
+	}
+	$('.mx-formpanel textarea[name="datajson"]').val(decode(data));
+};
+$(function(){
+	var datajson = $('.mx-formpanel textarea[name="datajson"]').val();
+	if(datajson==''){
+		clips_adv_empty();//左侧
+		clips_adv_empty();//右侧
+	}else{//加载数据
+		var _eds = encode(datajson),
+			_edslen = _eds.length,
+			_html = [];
+		for(var i=0;i<_edslen;i++){		
+			_html.push(clips_adv_picbox(_eds[i]));
+		}
+		$('.mx-formpanel .tcode-column').append(_html.join(''));
+		clips_adv_picevent();
+	}
+});
+</script>

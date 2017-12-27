@@ -1,0 +1,70 @@
+<?php if(!defined('WEB_ROOT')) exit();?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>金币市场专业委员会</title>
+<link href="<?php echo WEB_APP; ?>style/main.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo WEB_APP; ?>style/index.css" rel="stylesheet" type="text/css" />
+<script language="javascript" type="text/javascript" src="<?php echo WEB_APP; ?>script/jquery-1.7.1.min.js"></script>
+<script language="javascript" type="text/javascript" src="<?php echo WEB_APP; ?>script/easing.js"></script>
+<script language="javascript" type="text/javascript" src="<?php echo WEB_APP; ?>script/js.js"></script>
+<script language="javascript" type="text/javascript" src="<?php echo WEB_APP; ?>script/fun.js"></script>
+<script language="javascript" type="text/javascript" src="<?php echo WEB_APP; ?>script/form.js"></script>
+<script language="javascript" type="text/javascript" src="<?php echo WEB_APP; ?>script/jquery.SuperSlide.2.1.1.js"></script>
+<!--[if lte IE 6]>
+<script src="script/png.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        DD_belatedPNG.fix('div, ul, img, li, input , a');
+    </script>
+<![endif]--> 
+</head>
+
+<body>
+<div class="headDiv">
+<?php MFInclude::regincludepage('./','index_head.html'); ?>
+</div>
+<div class="sNav sNav_03">
+  <?php MFInclude::regincludepage('./','guide_left.html'); ?>
+</div>
+
+<div class="wal">
+<!--wal-->
+<div class="fl sideNav">
+      <div class="title">规章制度</div>
+      <div class="list">
+         <?php MFInclude::regincludepage('./','guide_left.html'); ?>
+      </div>
+</div>
+<div class="fr w725">
+     <div class="pageNow"><a href="">首页</a> > <a href="">规章制度</a> > <span>议事规程</span></div>
+     <!--内容-->
+     <div class="guide">
+        <div class="title color1">金币市场行业自律公约</div>
+        <div class="content">
+        第一条　　为维护规范有序的金币市场秩序，营造和谐稳定的金币生态环境，推动金币事业的可持续发展，根据《中国银行间市场交易商协会章      程》、《中国银行间市场交易商协会会员管理规则》和相关规定，制定中国金币市场行业自律公约（简称"自律公约"）。 
+        <br /><br />
+        第二条　　遵守国家相关法律、法规、规章、协会章程及自律规则，不得损害国家利益、社会公共利益、协会利益、行业利益和集藏群体利益，自觉接受自律公约的约束。 
+        <br /><br />
+        第三条　　积极参与、共同推动中国金币品牌建设，尊重和保护中国金币的知识产权，自觉维护中国金币品牌形象。 
+        <br /><br />
+        第四条　　遵守公平竞争原则，遵守商业道德，自觉维护正常的市场秩序，反对和抵制任何不正当竞争行为，自身不进行并坚决抵制制售、宣传假贵金属纪念币的违法行为。 
+        <br /><br />
+        第五条　　各会员单位应在各自分销区域内开展金银币零售业务，并按照"阳光工程"的要求向市场公开有关信息。 
+        <br /><br />
+        第六条　　积极开展中国金币品牌和中国金币产品的宣传活动，深入开展金币文化理论的研究，普及钱币知识，传播钱币文化。 
+        <br /><br />
+        第七条　　积极发挥连接发售机构和集藏群体的桥梁纽带作用，认真做好面向集藏群体的售后服务、政策解答等工作。 
+        <br /><br />
+        第八条　　加强合作与交流，形成行业发展共识，凝聚和发挥行业合力，树立行业的整体良好形象。
+        </div>
+     </div>
+     <!--内容End-->
+</div>
+<div class="h50"></div>
+<!--walEnd-->
+</div>
+
+<?php MFInclude::regincludepage('./','index_foot.html'); ?>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<%import class="Fields" method="getlivs,getfdinfo,getpiceditinfo"%>
+<div class="ui-state-default left-tree-top" style="margin-right:0;">
+	<span>应用组件 > 应用实例 > <%$info.livname%> > <%$fieldata.fieldlabel%></span>
+</div>
+<div class="mx-toolbar">
+	<a href="javascript:;" class="button" valurl="fieldparenturl" chvalurl="url">实例列表</a>
+	<a href="javascript:;" class="button" brurl="sys/fields/?app/id/<%$info.id%>.html">表单字段</a>
+	<a href="javascript:;" class="button" url="sys/fields/do/?Fields-formpicdel/id/<%$info.id%>/fid/<% echo $_GET['fid']; %>.html">清空图片设置</a>
+</div>
+<div class="mx-formpanel">
+	<form class="ajaxform" method="post" action="sys/fields/do/?Fields-formpicedit/id/<%$info.id%>/fid/<% echo $_GET['fid']; %>.html">
+	  <fieldset style="width:500px;">
+	  <legend>图片处理</legend>
+	  <textarea name="formDataInfo" class="mx-formdata"><%$datapic%></textarea>
+	  <table border="0" cellspacing="0" cellpadding="0">
+		<tr>
+          <td width="500">
+		    <label>原图</label>
+			<div class="datalist" col="4">
+				<span><em>宽：</em><input name="ywidth" type="text" dataType="Number" itip="宽只能填写整数" require="false" class="noauto" style="width:50px;"/></span>
+				<span><em>高：</em><input name="yheight" type="text" dataType="Number" itip="高只能填写整数" require="false" class="noauto" style="width:50px;"/></span>
+				<span><em>背景：</em><select name="ycolor" class="noauto" style="width:50px;"><%$colorbg%></select></span>
+				<span><em>位置：</em>
+				<select name="ypos" class="noauto" style="width:75px;">
+					<option value="0">中部居中</option>
+					<option value="1">顶部居中</option>
+					<option value="2">顶部居左</option>
+					<option value="3">顶部居右</option>
+					<option value="4">底部居中</option>
+					<option value="5">底部居左</option>
+					<option value="6">底部居右</option>
+					<option value="7">中部居左</option>
+					<option value="8">中部居右</option>
+				</select>
+				</span>
+			</div>
+		  </td>
+        </tr>
+		<tr>
+          <td width="500">
+		    <label>缩略图</label>
+			<div class="datalist" col="4">
+				<span><em>宽：</em><input name="swidth" type="text" dataType="Number" itip="宽只能填写整数" require="false" class="noauto" style="width:50px;"/></span>
+				<span><em>高：</em><input name="sheight" type="text" dataType="Number" itip="高只能填写整数" require="false" class="noauto" style="width:50px;"/></span>
+				<span><em>背景：</em><select name="scolor" class="noauto" style="width:50px;"><%$colorbg%></select></span>
+				<span><em>位置：</em>
+				<select name="spos" class="noauto" style="width:75px;">
+					<option value="0">中部居中</option>
+					<option value="1">顶部居中</option>
+					<option value="2">顶部居左</option>
+					<option value="3">顶部居右</option>
+					<option value="4">底部居中</option>
+					<option value="5">底部居左</option>
+					<option value="6">底部居右</option>
+					<option value="7">中部居左</option>
+					<option value="8">中部居右</option>
+				</select>
+				</span>
+			</div>
+		  </td>
+        </tr>
+		<tr>
+          <td width="500">
+		    <label>水印图片路径</label>
+			<input type="text" name="water_path" />
+		  </td>
+        </tr>
+		<tr>
+          <td width="500">
+		    <label>水印位置</label>
+			<select name="water_pos">
+				<option value="0">中部居中</option>
+				<option value="1">顶部居中</option>
+				<option value="2">顶部居左</option>
+				<option value="3">顶部居右</option>
+				<option value="4">底部居中</option>
+				<option value="5">底部居左</option>
+				<option value="6">底部居右</option>
+				<option value="7">中部居左</option>
+				<option value="8">中部居右</option>
+			</select>
+		  </td>
+        </tr>
+		<tr>
+          <td width="500">
+		    <label>系统列表中图片显示大小</label>
+			<div class="datalist" col="2">
+				<span><em>宽：</em><input name="gdwidth" type="text" dataType="Number" itip="宽只能填写整数" require="false" class="noauto" style="width:50px;"/></span>
+			  <span><em>高：</em><input name="gdheight" type="text" dataType="Number" itip="高只能填写整数" require="false" class="noauto" style="width:50px;"/></span></div>
+		  </td>
+        </tr>
+		<tr>
+          <td width="500" class="mx-form-submit">
+		    <input type="submit" name="submitButton" value="提　交" />
+		  </td>
+        </tr>
+      </table>
+	  </fieldset>
+	</form>
+</div>

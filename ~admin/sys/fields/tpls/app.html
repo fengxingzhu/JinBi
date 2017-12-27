@@ -1,0 +1,201 @@
+<%import class="Fields" method="getlivs,getflist"%>
+<style type="text/css">
+.fieldsarray { position:relative; z-index:10000; }
+.fields-button { margin:0; padding:0; position:absolute; top:0; left:60px; border:1px solid #CCCCCC; width:180px; background:#FFFFFF; display:none; }
+.fields-button li { margin:5px; padding:0; list-style:none; height:18px; line-height:18px; text-indent:2px; cursor:pointer; }
+.fields-button li img { margin:0 5px; border:0; }
+.fields-button .over { background:#CCCCCC; }
+.mx-update-form { background:url(images/update.png) no-repeat center left; }
+.mx-update-search { background:url(images/searchall.png) no-repeat center left; }
+.datainfolist { display:none; }
+.defaultsort { cursor:pointer; }
+</style>
+<div class="ui-state-default left-tree-top" style="margin-right:0;">
+	<span>表单管理</span>
+</div>
+<div class="mx-toolbar">
+	<a href="javascript:;" class="button" valurl="fieldparenturl" chvalurl="url">实例列表</a>
+	<a href="javascript:;" class="button" brurl="sys/fields/?appform/id/<%$info.id%>.html">表单属性</a>
+	<a href="javascript:" class="button fieldsarray">
+	<span>新增字段</span>
+	<ul class="fields-button">
+		
+	</ul>
+	</a>
+</div>
+<table id="Fields-grid">
+  <thead>
+	<tr>
+		<th width="20"><input type="checkbox" name="allselect"  class="gridcheck" /></th>
+		<th width="30">ID</th>
+		<th width="60">序号</th>
+		<th width="150">字段标签</th>
+		<th width="100">字段名</th>
+		<th width="180">字段类型</th>
+		<th width="50">字段行列</th>
+		<th width="50">列表宽</th>
+		<th width="50">可修改</th>
+		<th width="60">提交方式</th>
+		<th width="100">操作</th>
+	</tr>
+</thead>
+   <tbody>
+		<%loop from="data" item="list"%>
+		<tr>
+			<td><input type="checkbox" name="checks" value="<%$list.id%>"  class="gridcheck" /></td>
+			<td><%$list.id%></td>
+			<td><input type="text" name="handsort" mid="<%$list.id%>" value="<%$list.sort%>" style="width:50px;" /></td>
+			<td><span itip="设定为默认排序" class="defaultsort" dkey="<%$list.defsort%>" fid="<%$list.id%>"><%$list.defsort%></span><%$list.fieldlabel%></td>
+			<td><%$list.name%></td>
+			<td><select class="edittypeselect" fid="<%$list.id%>" infoid="<%$info.id%>" defxtype="<%$list.xtype%>"></select><span class="datainfolist" fid="<%$list.id%>"><%$list.xtype%></span></td>
+			<td><%$list.rowspan%>行<%$list.colspan%>列</td>
+			<td><%$list.listwidth%></td>
+			<td><% echo $VAL['list']['abledit']==1?'是':'否';%></td>
+			<td><span class="mx-mapping" key="displaytypearr"><%$list.displaytag%></span></td>
+			<td><a href="javascript:;" class="mx-list-edit" brurl="sys/fields/?<%$list.xtype%>/fid/<%$list.id%>/id/<%$info.id%>.html">修改</a><a href="javascript:;" class="mx-list-remove" delid="<%$list.id%>" delname="<%$list.fieldlabel%>" delurl="sys/fields/do/?Fields-del" backurl="sys/fields/?app/id/<%$info.id%>.html">删除</a></td>
+		</tr>
+		<%/loop%>
+</tbody>
+</table>
+<script type="text/javascript">
+$(function(){
+	$('#Fields-grid').flexigrid({
+		title:'<%$info.livname%>(表名:<%$info.dbtname%>)',
+		height:'auto',
+		showToggleBtn:false,
+		resizable:false,
+		defcheckbox:true,
+		buttons : [
+			{
+				name: '手动排序',
+				bclass: 'mx-handsort',
+				onpress : handsort({
+					tb:'#Fields-grid',
+					post:{
+						dbname:'{DB_MX_PRE}fields',
+						sortfd:'sort'
+					},
+					url:"do/?Common-handsort",
+					flurl:"sys/fields/?app/id/<%$info.id%>.html"
+				})
+			},
+			{
+				separator: true
+			},
+			{
+				name:'更新数据表',
+				bclass:'mx-update-form',
+				onpress:function(){
+					$.get("sys/fields/do/?Fields-createdbt/id/<%$info.id%>.html",function(){
+						Tip({title:'更新数据表提示:',content:'更新数据表成功!'});
+					});
+				}
+			},
+			{
+				separator: true
+			},
+			{
+				name: '删除',
+				bclass: 'mx-delete',
+				onpress : moredelete({
+					tb:'#Fields-grid',
+					post:{
+						dbname:'{DB_MX_PRE}fields'
+					},
+					url:"do/?Common-moredelete",
+					flurl:"sys/fields/?app/id/<%$info.id%>.html"
+				})
+			}
+		]
+	});
+	//是否需数据支持
+	$("span[class='datainfolist']").each(function(i,o){
+		var _xtype = $(o).text(),
+			fieldid = $(o).attr("fid"),
+			alltype = ['radiogroup','checkboxgroup','combo'];
+		if($.inArray(_xtype,alltype)>-1){
+			$(o).html("");//清空原来的
+			$('<a href="javascript:;" class="button" brurl="sys/fields/?adata/id/<%$info.id%>/fid/'+fieldid+'.html"><img src="images/datainfo.png" align="absmiddle" border="0" /></a>').appendTo(o);
+			$(o).show();
+		}
+		//以下是文件上传
+		upxtype = ['fileupload','simpleupload'];
+		if($.inArray(_xtype,upxtype)>-1){
+			$(o).html("");//清空原来的
+			$('<a href="javascript:;" class="button" brurl="sys/fields/?picupload/id/<%$info.id%>/fid/'+fieldid+'.html"><img src="images/uploadicon.png" align="absmiddle" border="0" /></a>').appendTo(o);
+			$(o).show();
+		}
+	});
+	//字段列表
+	var fieldata = {
+		textfield:'单行文本',
+		integralfield:'整数文本',
+		textarea:'文 本 域',
+		datefield:'时　　间',
+		radiogroup:'单　　选',
+		checkboxgroup:'多　　选',
+		combo:'下拉选择',
+		simpleupload:'单文件上传',
+		fileupload:'多文件上传',
+		ewebeditor:'ewebeditor编辑器',
+		ckeditor:'ckeditor编辑器',
+		markfield:'标识字段',
+		relationfield:'关联表'
+	};
+	var opts = [];
+	for(var i in fieldata){
+		$('<li brurl="sys/fields/?'+i+'/id/<%$info.id%>/sort/<%$SORTVAL%>.html"><img src="images/fields/'+i+'.png" align="absmiddle" />'+fieldata[i]+'</li>').appendTo(".fields-button");
+		opts.push({xtype:i,name:fieldata[i]});
+	}
+	$(".edittypeselect").each(function(i,o){
+		var _seltype = $(o).attr("defxtype");
+		for(var ii=0;ii<opts.length;ii++){
+			o.options[ii] = new Option(opts[ii]['name'],opts[ii]['xtype']);
+			if(_seltype==opts[ii]['xtype']) o.options[ii].selected = true;
+		}
+	});
+	//添加修改事件
+	$(".edittypeselect").change(function(){
+		var _selxtype = $(this).val(),
+			_selfid = $(this).attr("fid"),
+			_selinfoid = $(this).attr("infoid"),
+			_selbrurl = 'sys/fields/?'+_selxtype+'/fid/'+_selfid+'/id/'+_selinfoid+'.html';
+		tabtreecontent(_selbrurl);
+		$.mx.setparam('url',_selbrurl);
+	});
+	//默认排序
+	var imgs = ['<img src="images/sortdef.png" align="absmiddle">','<img src="images/sortup.png" align="absmiddle">','<img src="images/sortdown.png" align="absmiddle">'];
+	$("span[class='defaultsort']").each(function(i,o){
+		var val = $(o).text();
+		$(o).html(imgs[val]);
+	}).click(function(){
+		var dkey = $(this).attr("dkey"),
+			fid = $(this).attr("fid");
+		dkey++;
+		dkey = dkey>2?0:dkey;
+		$(this).attr("dkey",dkey);
+		$(this).html(imgs[dkey]);
+		//将其他的都变成无排序状态
+		$("span[class='defaultsort']").each(function(i,o){
+			if($(o).attr("fid")!=fid) $(o).html(imgs[0]);
+		});
+		$.post("sys/fields/do/?Fields-updefsort/id/"+fid+"/",{defsort:dkey},function(){
+			//
+		});
+	});
+});
+$(".fields-button li").mouseover(function(){
+	$(this).addClass("over");
+}).mouseout(function(){
+	$(this).removeClass("over");
+}).click(function(){
+	var url = $(this).attr("brurl");
+	$("#treeview-content").load(url,loadpubfn);
+	$.mx.setparam('url',url);
+});
+//打开字段列表
+$(".fieldsarray").click(function(){
+	$(".fields-button").toggle();
+});
+$.mx.mappdata.displaytypearr = ['隐藏','表单提交'];
+</script>

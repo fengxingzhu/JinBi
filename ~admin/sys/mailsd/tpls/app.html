@@ -1,0 +1,43 @@
+<%import class="Data" method="getconf"%>
+<div class="ui-state-default left-tree-top" style="margin-right:0;">
+	<span><span class="mx-sysmenu-tree"></span></span>
+</div>
+<div class="mx-formpanel">
+	<form class="ajaxform" method="post" action="sys/mailsd/do/?Data-add.html">
+	  <fieldset style="width:300px;">
+	  <textarea name="formDataInfo" class="mx-formdata"><%$data%></textarea>
+	  <legend><span class="mx-sysmenu-tree"></span></legend>
+	  <table border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="300">
+		    <label>SMTP服务器</label>
+			<input type="text" name="smtp" dataType="Require" itip="请填写SMTP服务器" />
+		  </td>
+		</tr>
+		<tr>
+          <td width="300">
+		  	<label>SMTP服务器端口(默认端口:25)</label>
+			<input type="text" name="port" value="25" dataType="Require" itip="请填写SMTP服务器端口" />
+		  </td>
+        </tr>
+        <tr>
+          <td width="300">
+		    <label>用户邮箱</label>
+			<input type="text" name="useremail" dataType="Require" itip="请填写用户邮箱" />
+		  </td>
+		</tr>
+		<tr>
+          <td width="300">
+		  	<label>用户密码</label>
+			<input type="password" name="password" value="<%$info.password%>" dataType="Require" itip="请填写用户密码" />
+		  </td>
+        </tr>
+		<tr>
+          <td width="300" class="mx-form-submit" colspan="2">
+		    <input type="submit" name="submitButton" value="提　交" />
+		  </td>
+        </tr>
+      </table>
+	  </fieldset>
+	</form>
+</div>

@@ -1,0 +1,46 @@
+<%import class="Data" method="getinfo"%>
+<div class="ui-state-default left-tree-top" style="margin-right:0;">
+	<span><span class="mx-sysmenu"></span> > 修改会员</span>
+</div>
+<div class="mx-toolbar">
+	<a href="javascript:;" class="button" brurl="vip/user/?app.html"><span class="mx-sysmenu-tree"></span></a>
+</div>
+<div class="mx-formpanel">
+	<form class="ajaxform" method="post" action="vip/user/do/?Data-edit/id/<% echo $_GET['id'] %>.html">
+	  <fieldset style="width:400px;">
+	  <legend>修改会员</legend>
+	  <textarea name="formDataInfo" class="mx-formdata"><%$data%></textarea>
+	  <table border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="400">
+		  	<label text="用户名">用户名</label>
+			<input type="text" name="username" dataType="Require" itip="请填写用户名" />
+		  </td>
+        </tr>
+		<tr>
+          <td width="400">
+		  	<label text="昵称">昵称</label>
+			<input type="text" name="niname" dataType="Require" itip="请填写昵称" />
+		  </td>
+        </tr>
+        <tr>
+          <td width="400">
+		  	<label text="Email">Email</label>
+			<input type="text" name="email" dataType="Email" itip="Email输入错误" />
+		  </td>
+        </tr>
+		<tr>
+          <td width="400">
+		  	<label text="手机号码">手机号码</label>
+			<input type="text" name="phone" dataType="Number" itip="请填写正确的手机号码" />
+		  </td>
+        </tr>
+		<tr>
+          <td width="400" class="mx-form-submit">
+		  	<input type="submit" name="submitButton" value="提　交" />
+		  </td>
+        </tr>
+      </table>
+	  </fieldset>
+	</form>
+</div>
